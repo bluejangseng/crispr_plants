@@ -3,330 +3,794 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CUP CROP</title>
+    <title>CUT & CROP</title>
+    <!-- Google Fonts import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+    
     <style>
-        /* 기본 리셋 및 스타일 설정 */
+        /* ==================== 1. 기본 스타일 설정 ==================== */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Pretendard', sans-serif;
-            background-color: #E2F0D9; /* 이미지의 연두색 배경 */
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #e5dfd5;
+            color: #333;
+            overflow-x: hidden;
             position: relative;
+            min-height: 100vh;
         }
 
-        /* 1. 상단 헤더 영역 */
-        header {
+        /* 그림자/햇빛 감성 배경 패턴 처리 */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 70px;
+            height: 100%;
+            background: radial-gradient(circle at 70% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 60%),
+                        linear-gradient(135deg, rgba(235, 229, 219, 0.8) 0%, rgba(215, 207, 195, 0.9) 100%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* ==================== 2. 상단 헤더 / 네비게이션 ==================== */
+        header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 0 40px;
-            border-bottom: 2px solid #166088;
+            align-items: center;
+            padding: 25px 50px;
+            position: relative;
             z-index: 10;
         }
 
-        /* 좌측 햄버거 메뉴 아이콘 */
-        .menu-icon {
+        .menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
             display: flex;
             flex-direction: column;
             gap: 6px;
-            cursor: pointer;
-        }
-        .menu-icon div {
-            width: 35px;
-            height: 3px;
-            background-color: #166088;
+            padding: 5px;
         }
 
-        /* 상단 중앙 CUP CROP 로고/이미지 */
-        .logo-box {
-            background-color: #166088;
-            color: white;
-            padding: 8px 30px;
-            font-weight: bold;
-            font-size: 18px;
-            border-radius: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            letter-spacing: 1px;
-            cursor: pointer;
-        }
-        .logo-box img {
-            max-height: 30px; /* 이미지를 넣을 경우 사용 */
-            display: none;
+        .menu-btn span {
+            display: block;
+            width: 28px;
+            height: 2px;
+            background-color: #2b2b2b;
+            transition: 0.3s;
         }
 
-        /* 우측 상단 메인 메뉴/로그인 버튼 */
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            color: #1a1a1a;
+            text-transform: uppercase;
+        }
+
         .nav-links {
             display: flex;
-            gap: 12px;
-        }
-        .nav-btn {
-            background-color: #166088;
-            color: white;
-            border: none;
-            padding: 6px 16px;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: background 0.2s;
-        }
-        .nav-btn:hover {
-            background-color: #104868;
+            gap: 25px;
+            list-style: none;
         }
 
-        /* 2. 메인 컨텐츠 영역 */
+        .nav-links a {
+            text-decoration: none;
+            color: #4a4a4a;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            font-weight: 500;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #000;
+        }
+
+        /* ==================== 3. 메인 컨텐츠 영역 ==================== */
         main {
-            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 400;
+            margin-left: 140px;
+            margin-bottom: 20px;
+            color: #3a3a3a;
+        }
+
+        /* 잡지  Peek 요소 (왼쪽 고정) */
+        .magazine-preview {
+            position: fixed;
+            left: -130px;
+            top: 45%;
+            transform: translateY(-50%);
+            width: 180px;
+            height: 250px;
+            background: #d4cbbd;
+            border-radius: 4px 12px 12px 4px;
+            box-shadow: 5px 10px 25px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), left 0.4s;
+            z-index: 20;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .magazine-preview:hover {
+            left: -100px;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .magazine-preview-inner {
+            padding: 15px;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.1), transparent 20%);
+        }
+
+        .magazine-preview h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            line-height: 1.1;
+            color: #2c3e2e;
+        }
+
+        /* 3개 원형 카테고리 스타일 */
+        .categories-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            margin: 30px 0 60px 80px;
+        }
+
+        .category-item {
             display: flex;
             flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.4s ease;
+        }
+
+        .category-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .circle-wrapper {
+            width: 210px;
+            height: 210px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-            padding-left: 100px; /* 좌측 잡지 버튼 공간 확보 */
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
-        /* 좌측 잡지 버튼 (반원 곡선 형태) */
-        .magazine-btn {
-            position: absolute;
-            left: -120px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 250px;
-            height: 500px;
-            background-color: #166088;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 35px;
-            color: white;
+        .category-item:hover .circle-wrapper {
+            border-color: #5b7065;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .circle-wrapper svg {
+            width: 70%;
+            height: 70%;
+            transition: transform 0.5s ease;
+        }
+
+        .category-item:hover .circle-wrapper svg {
+            transform: scale(1.1);
+        }
+
+        .category-label {
+            margin-top: 20px;
+            font-family: 'Cormorant Garamond', serif;
             font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s;
-            z-index: 5;
-        }
-        .magazine-btn:hover {
-            transform: translateY(-50%) scale(1.03);
+            letter-spacing: 3px;
+            font-weight: 600;
+            color: #2c2c2c;
         }
 
-        /* 중앙 3개 원형 버튼 컨테이너 */
-        .circle-container {
-            display: flex;
-            gap: 60px;
-            margin-bottom: 60px;
+        /* ==================== 4. AI 프롬프트 검색바 ==================== */
+        .search-container {
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
         }
 
-        .circle-btn {
-            width: 180px;
-            height: 180px;
-            background-color: #166088;
-            border-radius: 50%;
-            border: none;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            transition: transform 0.2s, background-color 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .circle-btn:hover {
-            transform: translateY(-5px);
-            background-color: #104868;
-        }
-
-        /* 하단 AI 프롬프트 입력 바 */
-        .ai-prompt-bar {
-            width: 75%;
-            max-width: 900px;
-            height: 55px;
-            background-color: #166088;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            padding: 5px 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .ai-prompt-bar input {
+        .search-box {
             width: 100%;
-            height: 100%;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
+            padding: 12px 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            background: rgba(255, 255, 255, 0.75);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border-color: #7a8b7b;
+        }
+
+        .search-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            stroke: #777;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .search-input {
+            width: 100%;
+            border: none;
             background: transparent;
-            border: none;
             outline: none;
-            color: white;
+            font-family: 'Cormorant Garamond', 'Noto Sans KR', serif;
             font-size: 16px;
-        }
-        .ai-prompt-bar input::placeholder {
-            color: #b0c4de;
+            color: #444;
         }
 
-        .ai-prompt-bar button {
-            background-color: #ffffff;
-            color: #166088;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-left: 10px;
+        .search-input::placeholder {
+            color: #888888;
+            font-style: italic;
         }
 
-        /* 3. 팝업(모달) 스타일 */
+        /* ==================== 5. 팝업 / 모달 스타일 ==================== */
+        /* 공통 팝업 배경 오버레이 */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
             z-index: 100;
         }
 
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 공통 카테고리/페이지 모달 컨텐츠 */
         .modal-content {
-            background: white;
-            width: 400px;
-            padding: 30px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -45%) scale(0.95);
+            background: #f4f0ea;
+            width: 90%;
+            max-width: 500px;
+            padding: 40px;
             border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            z-index: 101;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        .modal-content h2 {
-            margin-bottom: 15px;
-            color: #166088;
-        }
-
-        .modal-content p {
-            color: #555;
-            margin-bottom: 20px;
+        .modal-overlay.active .modal-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
         }
 
         .close-btn {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 20px;
+            top: 20px;
+            right: 25px;
+            font-size: 28px;
             background: none;
             border: none;
             cursor: pointer;
-            color: #888;
+            color: #666;
+        }
+
+        .modal-header {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #2b3a2d;
+            border-bottom: 1px solid #d0c8bc;
+            padding-bottom: 10px;
+        }
+
+        /* 메뉴 드로어 팝업 (왼쪽에서 열림) */
+        .menu-drawer {
+            position: fixed;
+            top: 0;
+            left: -350px;
+            width: 320px;
+            height: 100%;
+            background: #ede8e0;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.1);
+            z-index: 102;
+            transition: left 0.4s ease;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-drawer.open {
+            left: 0;
+        }
+
+        .menu-drawer ul {
+            list-style: none;
+            margin-top: 40px;
+        }
+
+        .menu-drawer li {
+            margin-bottom: 25px;
+        }
+
+        .menu-drawer a {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.2s;
+        }
+
+        .menu-drawer a:hover {
+            color: #6b8e70;
+        }
+
+        /* ==================== 6. 잡지 확대 모달 (두번째 사진 디자인) ==================== */
+        .magazine-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 90%;
+            max-width: 850px;
+            height: 85vh;
+            background: #f7f4ef;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            z-index: 105;
+            display: flex;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .modal-overlay.active .magazine-modal {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* 잡지 표지 왼쪽 레이아웃 (제시된 2번째 이미지 복원) */
+        .mag-cover {
+            width: 50%;
+            background: #e6dfd3;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-right: 1px solid #d5cecf;
+            position: relative;
+        }
+
+        .mag-header-top {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: #4a4a4a;
+        }
+
+        .mag-title-main {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 52px;
+            line-height: 0.95;
+            color: #32382e;
+            margin: 15px 0 5px 0;
+        }
+
+        .mag-subtitle {
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* 잡지 표지 일러스트 표현 영역 */
+        .mag-art {
+            flex-grow: 1;
+            background: #485949;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .mag-art-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 100%, #8ca083 0%, #364738 80%);
+        }
+
+        .glass-drink {
+            position: relative;
+            z-index: 2;
+            width: 80px;
+            height: 110px;
+            background: rgba(255,255,255,0.25);
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 6px;
+            backdrop-filter: blur(2px);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glass-liquid {
+            width: 85%;
+            height: 60%;
+            background: #c86d48;
+            border-radius: 2px 2px 4px 4px;
+            position: absolute;
+            bottom: 6px;
+        }
+
+        /* 잡지 오른쪽 안내 텍스트 영역 */
+        .mag-info {
+            width: 50%;
+            padding: 40px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .mag-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            color: #2b3a2d;
+            margin-bottom: 15px;
+        }
+
+        .plant-of-month {
+            background: rgba(116, 140, 114, 0.1);
+            border-left: 3px solid #5b7065;
+            padding: 15px;
+            margin: 15px 0 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .plant-of-month h4 {
+            font-size: 14px;
+            color: #445446;
+            margin-bottom: 5px;
+        }
+
+        .plant-of-month p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .sub-btn {
+            background: #39483a;
+            color: #fff;
+            border: none;
+            padding: 14px 28px;
+            font-size: 13px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .sub-btn:hover {
+            background: #232e24;
         }
     </style>
 </head>
 <body>
 
-    <!-- 상단 헤더 -->
-    <header>
-        <div class="menu-icon">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-        
-        <!-- 회사 이름 / 로고 이미지 영역 -->
-        <div class="logo-box">
-            <!-- 이미지가 준비되시면 아래 img 태그 주석을 해제하고 src를 입력하세요 -->
-            <!-- <img src="cupcrop-logo.png" alt="CUP CROP"> -->
-            <span>CUP CROP</span>
-        </div>
+    <div class="bg-overlay"></div>
 
-        <div class="nav-links">
-            <button class="nav-btn" onclick="openModal('메뉴 1', '준비 중인 페이지입니다.')">메뉴1</button>
-            <button class="nav-btn" onclick="openModal('메뉴 2', '준비 중인 페이지입니다.')">메뉴2</button>
-            <button class="nav-btn" onclick="openModal('메뉴 3', '준비 중인 페이지입니다.')">메뉴3</button>
-            <button class="nav-btn" onclick="openModal('로그인', '로그인 화면 팝업입니다.')">로그인</button>
-        </div>
+    <!-- 상단 헤더 영역 -->
+    <header>
+        <button class="menu-btn" id="openMenuBtn" aria-label="메뉴 열기">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="logo">CUT & CROP</div>
+        <ul class="nav-links">
+            <li><a href="#" class="page-link" data-page="MY PAGE">MY PAGE</a></li>
+            <li><a href="#" class="page-link" data-page="LOG IN">LOG IN</a></li>
+            <li><a href="#" class="page-link" data-page="MAKE ACCOUNT">MAKE ACCOUNT</a></li>
+        </ul>
     </header>
 
-    <!-- 메인 컨텐츠 영역 -->
-    <main>
-        <!-- 좌측 잡지 이동 버튼 -->
-        <div class="magazine-btn" onclick="openModal('잡지', '잡지 페이지로 이동합니다.')">
-            잡지 &gt;
-        </div>
-
-        <!-- 가운데 3개 원형 버튼 -->
-        <div class="circle-container">
-            <button class="circle-btn" onclick="openModal('나무', '나무 관련 상세 페이지/팝업 내용입니다.')">나무</button>
-            <button class="circle-btn" onclick="openModal('꽃', '꽃 관련 상세 페이지/팝업 내용입니다.')">꽃</button>
-            <button class="circle-btn" onclick="openModal('식물', '식물 관련 상세 페이지/팝업 내용입니다.')">식물</button>
-        </div>
-
-        <!-- 하단 AI 프롬프트 입력창 -->
-        <div class="ai-prompt-bar">
-            <input type="text" id="promptInput" placeholder="AI 프롬프트를 입력하세요..." onkeypress="handleKeyPress(event)">
-            <button onclick="submitPrompt()">전송</button>
-        </div>
-    </main>
-
-    <!-- 공통 팝업(모달) 창 -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal()">&times;</button>
-            <h2 id="modalTitle">팝업 제목</h2>
-            <p id="modalBody">팝업 내용입니다.</p>
+    <!-- 왼쪽 잡지 커버 미리보기 (마우스 오버 / 클릭 반응) -->
+    <div class="magazine-preview" id="magazineTrigger">
+        <div class="magazine-preview-inner">
+            <h4>Plant<br>& Sip</h4>
         </div>
     </div>
 
-    <!-- JavaScript 동적 제어 -->
+    <!-- 메인 콘텐츠 영역 -->
+    <main>
+        <div class="section-title">Recommendation</div>
+
+        <!-- 3개 원형 카테고리 -->
+        <div class="categories-container">
+            <!-- 1. FLOWER -->
+            <div class="category-item" data-category="FLOWER">
+                <div class="circle-wrapper">
+                    <!-- 백합 벡터 그래픽 -->
+                    <svg viewBox="0 0 100 100">
+                        <path d="M50,90 Q45,60 50,30 Q55,60 50,90" fill="#6d826a" />
+                        <path d="M50,45 Q20,35 25,15 Q45,25 50,45" fill="#fcfbf7" stroke="#e0dacb" stroke-width="1"/>
+                        <path d="M50,45 Q80,35 75,15 Q55,25 50,45" fill="#fcfbf7" stroke="#e0dacb" stroke-width="1"/>
+                        <path d="M50,45 Q50,10 40,5 Q40,30 50,45" fill="#f5f0e1" stroke="#e0dacb" stroke-width="1"/>
+                        <circle cx="42" cy="18" r="1.5" fill="#a87b4e"/>
+                        <circle cx="50" cy="12" r="1.5" fill="#a87b4e"/>
+                        <circle cx="58" cy="18" r="1.5" fill="#a87b4e"/>
+                    </svg>
+                </div>
+                <div class="category-label">FLOWER</div>
+            </div>
+
+            <!-- 2. PLANTS -->
+            <div class="category-item" data-category="PLANTS">
+                <div class="circle-wrapper">
+                    <!-- 식물 잎사귀 벡터 그래픽 -->
+                    <svg viewBox="0 0 100 100">
+                        <path d="M50,85 L50,20" stroke="#4a5d4e" stroke-width="2" />
+                        <path d="M50,65 Q30,55 25,40 Q45,45 50,65" fill="#607864" />
+                        <path d="M50,55 Q70,45 75,30 Q55,35 50,55" fill="#728c76" />
+                        <path d="M50,40 Q30,30 35,15 Q50,25 50,40" fill="#4a5d4e" />
+                        <path d="M50,30 Q65,20 60,8 Q48,18 50,30" fill="#88a38c" />
+                    </svg>
+                </div>
+                <div class="category-label">PLANTS</div>
+            </div>
+
+            <!-- 3. TREE -->
+            <div class="category-item" data-category="TREE">
+                <div class="circle-wrapper">
+                    <!-- 나무 줄기/잎 벡터 그래픽 -->
+                    <svg viewBox="0 0 100 100">
+                        <path d="M45,90 Q50,60 40,25 L43,24 Q53,60 48,90" fill="#5c4d41" />
+                        <path d="M42,50 Q25,40 20,25 Q35,30 42,50" fill="#3b4d3c" />
+                        <path d="M46,40 Q68,30 70,18 Q55,20 46,40" fill="#4a5e4c" />
+                        <path d="M40,27 Q30,15 35,5 Q48,15 40,27" fill="#5c735e" />
+                    </svg>
+                </div>
+                <div class="category-label">TREE</div>
+            </div>
+        </div>
+
+        <!-- AI 프롬프트 검색바 -->
+        <div class="search-container">
+            <div class="search-box">
+                <svg class="search-icon" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" class="search-input" id="aiPromptInput" placeholder="Ask AI for garden Inspiration... [ AI Prompt ]">
+            </div>
+        </div>
+    </main>
+
+    <!-- ==================== 팝업 모달 모음 ==================== -->
+    <div class="modal-overlay" id="modalOverlay">
+        
+        <!-- 1. 카테고리 / 페이지 안내 일반 모달 -->
+        <div class="modal-content" id="generalModal">
+            <button class="close-btn" class="closeModal">&times;</button>
+            <div class="modal-header" id="modalTitle">Category</div>
+            <p id="modalDescription" style="line-height: 1.6; color: #555;">상세 내용이 들어가는 자리입니다.</p>
+        </div>
+
+        <!-- 2. 확대된 잡지 모달 (두번째 사진 디자인 재현) -->
+        <div class="magazine-modal" id="magazineModal">
+            <button class="close-btn" id="closeMagBtn">&times;</button>
+            
+            <!-- 잡지 커버 (좌측) -->
+            <div class="mag-cover">
+                <div class="mag-header-top">
+                    <span>CIRER SIMPEAKE</span>
+                    <span>AFGEI DY KIN XUIH</span>
+                </div>
+                <div>
+                    <h1 class="mag-title-main">Plant & Sip</h1>
+                    <div class="mag-subtitle">Magazina / Plant Magazine</div>
+                </div>
+                
+                <!-- 일러스트 그래픽 영역 -->
+                <div class="mag-art">
+                    <div class="mag-art-bg"></div>
+                    <div class="glass-drink">
+                        <div class="glass-liquid"></div>
+                        <!-- 로즈마리 스틱 표현 -->
+                        <div style="width:3px; height:60px; background:#2d3a2b; transform:rotate(15deg); position:absolute; top:-10px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 잡지 상세 내용 및 구독 신청 (우측) -->
+            <div class="mag-info">
+                <h3>Plant & Sip Monthly</h3>
+                <p style="color: #666; font-size: 14px; line-height: 1.6;">
+                    일상 속에 녹아드는 식물과 함께하는 음료 한 잔의 여유. 매월 새로운 식물 관리법과 가드닝 팁을 전달합니다.
+                </p>
+
+                <!-- 이번달의 식물 안내 -->
+                <div class="plant-of-month">
+                    <h4>이번 달의 식물: 몬스테라 & 칵테일 로즈마리</h4>
+                    <p>
+                        9월호에서는 공기 정화 능력이 뛰어난 몬스테라 델리시오사와 홈 카페에서 쉽게 곁들일 수 있는 허브 음료 레시피를 소개합니다.
+                    </p>
+                </div>
+
+                <div style="margin-top: 10px;">
+                    <p style="font-size: 12px; color: #888; margin-bottom: 12px;">월간 잡지 정기 구독 서비스 (월 9,900원)</p>
+                    <button class="sub-btn" onclick="alert('구독 신청이 완료되었습니다!')">구독 서비스 신청하기</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 3. 좌측 햄버거 메뉴 슬라이드 드로어 -->
+    <div class="menu-drawer" id="menuDrawer">
+        <button class="close-btn" id="closeMenuBtn">&times;</button>
+        <div class="logo" style="font-size: 24px; margin-top:20px;">CUT & CROP</div>
+        <ul>
+            <li><a href="#" class="page-link" data-page="HOME">HOME</a></li>
+            <li><a href="#" class="page-link" data-page="FLOWER">FLOWER</a></li>
+            <li><a href="#" class="page-link" data-page="PLANTS">PLANTS</a></li>
+            <li><a href="#" class="page-link" data-page="TREE">TREE</a></li>
+            <li><a href="#" class="page-link" data-page="MAGAZINE">MAGAZINE</a></li>
+        </ul>
+    </div>
+
+    <!-- ==================== 자바스크립트 ==================== -->
     <script>
-        // 팝업 열기 함수
-        function openModal(title, text) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalBody').innerText = text;
-            document.getElementById('modalOverlay').style.display = 'flex';
+        // 요소 선택자
+        const modalOverlay = document.getElementById('modalOverlay');
+        const generalModal = document.getElementById('generalModal');
+        const magazineModal = document.getElementById('magazineModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        
+        const magazineTrigger = document.getElementById('magazineTrigger');
+        const openMenuBtn = document.getElementById('openMenuBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const menuDrawer = document.getElementById('menuDrawer');
+        const aiPromptInput = document.getElementById('aiPromptInput');
+
+        // 팝업 열기 함수 (일반 모달)
+        function openGeneralModal(title, text) {
+            modalTitle.innerText = title;
+            modalDescription.innerText = text;
+            magazineModal.style.display = 'none';
+            generalModal.style.display = 'block';
+            modalOverlay.classList.add('active');
         }
 
-        // 팝업 닫기 함수
+        // 잡지 모달 열기 함수 (2번째 사진 구현)
+        function openMagazineModal() {
+            generalModal.style.display = 'none';
+            magazineModal.style.display = 'flex';
+            modalOverlay.classList.add('active');
+        }
+
+        // 모든 모달 닫기
         function closeModal() {
-            document.getElementById('modalOverlay').style.display = 'none';
+            modalOverlay.classList.remove('active');
         }
 
-        // 바깥 클릭 시 팝업 닫기
-        window.onclick = function(event) {
-            const modal = document.getElementById('modalOverlay');
-            if (event.target === modal) {
+        // 1. 3개 원형 클릭 시 카테고리 팝업 (꽃, 식물, 나무)
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const category = item.getAttribute('data-category');
+                let infoText = '';
+                
+                if(category === 'FLOWER') {
+                    infoText = '꽃 카테고리 페이지입니다. 아름다운 계절별 꽃과 꽃다발 연출 팁을 만나보세요.';
+                } else if(category === 'PLANTS') {
+                    infoText = '식물 카테고리 페이지입니다. 실내 공기 정화 식물 및 인테리어 식물 가이드를 제공합니다.';
+                } else if(category === 'TREE') {
+                    infoText = '나무 카테고리 페이지입니다. 묘목 및 반려나무 케어, 분재 관련 소식을 전달합니다.';
+                }
+                
+                openGeneralModal(`${category} CATEGORY`, infoText);
+            });
+        });
+
+        // 2. 잡지 영역 클릭/마우스 가까이 가져갈 때 잡지 팝업 열기
+        magazineTrigger.addEventListener('click', openMagazineModal);
+        // 마우스 호버 시 자연스럽게 잡지 팝업을 유도할 수 있도록 클릭 이벤트 연결
+
+        // 3. 상단 네비게이션 버튼 (LOGIN, MY PAGE, MAKE ACCOUNT) 클릭 시
+        document.querySelectorAll('.page-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageName = link.getAttribute('data-page');
+                menuDrawer.classList.remove('open');
+                openGeneralModal(pageName, `${pageName} 화면으로 이동합니다.`);
+            });
+        });
+
+        // 4. 왼쪽 상단 3개 줄 (햄버거 메뉴) 클릭 시 메뉴 팝업 슬라이드 Open
+        openMenuBtn.addEventListener('click', () => {
+            menuDrawer.classList.add('open');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            menuDrawer.classList.remove('open');
+        });
+
+        // 5. 모달 닫기 버튼 및 오버레이 클릭 이벤트
+        document.querySelectorAll('.close-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                closeModal();
+            });
+        });
+
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
                 closeModal();
             }
-        };
+        });
 
-        // AI 프롬프트 제출 처리
-        function submitPrompt() {
-            const input = document.getElementById('promptInput');
-            if (input.value.trim() !== "") {
-                openModal('AI 프롬프트 생성', `'${input.value}' 프롬프트를 생성 중입니다...`);
-                input.value = '';
-            } else {
-                alert('프롬프트를 입력해주세요!');
+        // 6. AI 프롬프트 검색바 Enter 입력 이벤트 handling
+        aiPromptInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = aiPromptInput.value.trim();
+                if (query) {
+                    openGeneralModal('AI Garden Inspiration', `'${query}' 프롬프트를 기반으로 AI 정원 스타일을 생성 중입니다...`);
+                    aiPromptInput.value = '';
+                }
             }
-        }
-
-        // 엔터키 입력 이벤트
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                submitPrompt();
-            }
-        }
+        });
     </script>
 </body>
 </html>
