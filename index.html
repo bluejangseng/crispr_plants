@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CUT & CROP</title>
-    <!-- Google Fonts import -->
+    <title>CUT & CROP - Bio Plant Design Studio</title>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* ==================== 1. 기본 스타일 설정 ==================== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -26,7 +26,6 @@
             min-height: 100vh;
         }
 
-        /* 그림자/햇빛 감성 배경 패턴 처리 */
         .bg-overlay {
             position: fixed;
             top: 0;
@@ -39,7 +38,6 @@
             pointer-events: none;
         }
 
-        /* ==================== 2. 상단 헤더 / 네비게이션 ==================== */
         header {
             display: flex;
             justify-content: space-between;
@@ -78,15 +76,16 @@
 
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 16px;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links a {
             text-decoration: none;
             color: #4a4a4a;
-            font-size: 13px;
-            letter-spacing: 1.5px;
+            font-size: 12px;
+            letter-spacing: 1px;
             font-weight: 500;
             text-transform: uppercase;
             transition: color 0.3s;
@@ -96,7 +95,6 @@
             color: #000;
         }
 
-        /* ==================== 3. 메인 컨텐츠 영역 ==================== */
         main {
             max-width: 1200px;
             margin: 0 auto;
@@ -104,52 +102,74 @@
             position: relative;
         }
 
-        .section-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 24px;
-            font-weight: 400;
-            margin-left: 140px;
-            margin-bottom: 20px;
-            color: #3a3a3a;
-        }
-
-        /* 잡지  Peek 요소 (왼쪽 고정) */
+        /* 잡지 Preview (좌측 고정 Peek) */
         .magazine-preview {
             position: fixed;
-            left: -130px;
+            left: -120px;
             top: 45%;
             transform: translateY(-50%);
             width: 180px;
-            height: 250px;
-            background: #d4cbbd;
-            border-radius: 4px 12px 12px 4px;
-            box-shadow: 5px 10px 25px rgba(0,0,0,0.15);
+            height: 260px;
+            background: #e6dfd3;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 5px 10px 25px rgba(0,0,0,0.18);
             cursor: pointer;
             transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), left 0.4s;
             z-index: 20;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 1px solid rgba(0,0,0,0.08);
+            border-left: none;
         }
 
         .magazine-preview:hover {
-            left: -100px;
-            transform: translateY(-50%) scale(1.05);
+            left: -75px;
+            transform: translateY(-50%) scale(1.03);
         }
 
         .magazine-preview-inner {
-            padding: 15px;
+            width: 180px;
             height: 100%;
-            background: linear-gradient(to right, rgba(0,0,0,0.1), transparent 20%);
+            padding: 16px 12px;
+            background: #e6dfd3;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
         }
 
-        .magazine-preview h4 {
+        .magazine-preview-inner .mag-peek-header {
+            font-size: 8px;
+            text-align: right;
+            letter-spacing: 1px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .magazine-preview-inner .mag-peek-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 22px;
-            line-height: 1.1;
+            font-size: 26px;
+            font-weight: 600;
+            line-height: 1.0;
             color: #2c3e2e;
+            text-align: right;
+            padding-right: 4px;
+            margin: 6px 0;
         }
 
-        /* 3개 원형 카테고리 스타일 */
+        .magazine-preview-inner .mag-peek-art {
+            width: 100%;
+            height: 130px;
+            background: radial-gradient(circle at 50% 100%, #8ca083 0%, #364738 80%);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            padding: 8px;
+        }
+
+        /* 3개 원형 카테고리 */
         .categories-container {
             display: flex;
             justify-content: center;
@@ -210,7 +230,6 @@
             color: #2c2c2c;
         }
 
-        /* ==================== 4. AI 프롬프트 검색바 ==================== */
         .search-container {
             max-width: 650px;
             margin: 0 auto;
@@ -260,16 +279,14 @@
             font-style: italic;
         }
 
-        /* ==================== 5. 팝업 / 모달 스타일 ==================== */
-        /* 공통 팝업 배경 오버레이 */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
@@ -281,64 +298,44 @@
             visibility: visible;
         }
 
-        /* 공통 카테고리/페이지 모달 컨텐츠 */
-        .modal-content {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -45%) scale(0.95);
-            background: #f4f0ea;
-            width: 90%;
-            max-width: 500px;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-            z-index: 101;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-        .modal-overlay.active .modal-content {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
         .close-btn {
             position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 28px;
+            top: 12px;
+            right: 16px;
+            font-size: 24px;
             background: none;
             border: none;
             cursor: pointer;
             color: #666;
+            z-index: 120;
         }
+
+        .close-btn:hover { color: #000; }
 
         .modal-header {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 28px;
-            margin-bottom: 15px;
+            font-size: 24px;
+            margin-bottom: 8px;
             color: #2b3a2d;
             border-bottom: 1px solid #d0c8bc;
-            padding-bottom: 10px;
+            padding-bottom: 6px;
         }
 
-        /* 메뉴 드로어 팝업 (왼쪽에서 열림) */
         .menu-drawer {
             position: fixed;
             top: 0;
             left: -350px;
             width: 320px;
+            max-width: 85vw;
             height: 100%;
             background: #ede8e0;
-            box-shadow: 5px 0 25px rgba(0,0,0,0.1);
-            z-index: 102;
-            transition: left 0.4s ease;
-            padding: 60px 40px;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.15);
+            z-index: 220;
+            transition: left 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            padding: 50px 30px;
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
         }
 
         .menu-drawer.open {
@@ -347,56 +344,363 @@
 
         .menu-drawer ul {
             list-style: none;
-            margin-top: 40px;
+            margin-top: 25px;
         }
 
         .menu-drawer li {
-            margin-bottom: 25px;
+            margin-bottom: 16px;
         }
 
         .menu-drawer a {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 24px;
+            font-family: 'Cormorant Garamond', 'Noto Sans KR', serif;
+            font-size: 18px;
             text-decoration: none;
             color: #333;
             transition: color 0.2s;
+            display: block;
         }
 
         .menu-drawer a:hover {
-            color: #6b8e70;
+            color: #5b7065;
         }
 
-        /* ==================== 6. 잡지 확대 모달 (두번째 사진 디자인) ==================== */
+        .category-gallery-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 92%;
+            max-width: 820px;
+            max-height: 85vh;
+            background: #f7f4ef;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            z-index: 106;
+            display: none;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active .category-gallery-modal {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .species-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 16px;
+            margin-top: 15px;
+        }
+
+        .species-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e2dad0;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .species-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        }
+
+        .species-img-box {
+            height: 125px;
+            background: radial-gradient(circle, #f0ebe1 0%, #e3dbcd 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 10px;
+            overflow: hidden;
+        }
+
+        .species-img-box svg {
+            width: 100%;
+            height: 100%;
+            max-height: 105px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.08));
+        }
+
+        .species-details {
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .species-name {
+            font-family: 'Cormorant Garamond', 'Noto Sans KR', serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #2b3a2d;
+        }
+
+        .species-spec-list {
+            margin: 6px 0;
+            font-size: 11px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .species-spec-list span {
+            font-weight: 600;
+            color: #3b4d3c;
+        }
+
+        .species-source-tag {
+            font-size: 9px;
+            background: rgba(91, 112, 101, 0.12);
+            color: #435748;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .buy-now-btn {
+            background: #4a5d4e;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            width: 100%;
+            letter-spacing: 0.5px;
+            transition: background 0.2s;
+        }
+
+        .buy-now-btn:hover {
+            background: #2f3d33;
+        }
+
+        .mypage-modal, .order-modal, .about-modal, .general-modal, .auth-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%;
+            max-width: 620px;
+            max-height: 82vh;
+            background: #f5f2eb;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            z-index: 107;
+            display: none;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active .mypage-modal,
+        .modal-overlay.active .order-modal,
+        .modal-overlay.active .about-modal,
+        .modal-overlay.active .general-modal,
+        .modal-overlay.active .auth-modal {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: #4a5d4e;
+            margin-bottom: 4px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d4cbbd;
+            border-radius: 5px;
+            background: #fcfbf8;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #4a5d4e;
+        }
+
+        .auth-submit-btn {
+            background: #2b3a2d;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        .auth-submit-btn:hover {
+            background: #19241a;
+        }
+
+        .created-plants-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .plant-item-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            border: 1px solid #e2dad0;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .plant-item-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+        }
+
+        .plant-item-thumb {
+            width: 70px;
+            height: 70px;
+            border-radius: 6px;
+            background: radial-gradient(circle, #f0ebe1 0%, #e3dbcd 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+            padding: 6px;
+            border: 1px solid #dcd3c5;
+        }
+
+        .plant-item-thumb svg, 
+        .plant-item-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .plant-item-info {
+            flex-grow: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .plant-item-info h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 17px;
+            font-weight: 600;
+            color: #2b3a2d;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .order-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 12px;
+            border: 1px solid #e0d8cc;
+        }
+
+        .stepper {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .stepper::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background: #d8d0c5;
+            z-index: 1;
+        }
+
+        .step {
+            position: relative;
+            z-index: 2;
+            background: #f5f2eb;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            border: 2px solid #d8d0c5;
+            color: #888;
+        }
+
+        .step.active {
+            background: #4a5d4e;
+            border-color: #4a5d4e;
+            color: #fff;
+        }
+
+        .step-label {
+            position: absolute;
+            top: 30px;
+            font-size: 10px;
+            width: 60px;
+            text-align: center;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #666;
+        }
+
         .magazine-modal {
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            width: 90%;
-            max-width: 850px;
-            height: 85vh;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 94%;
+            max-width: 820px;
+            height: 90vh;
+            max-height: 600px;
             background: #f7f4ef;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
             z-index: 105;
-            display: flex;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease;
-            border-radius: 4px;
+            display: none;
+            border-radius: 12px;
             overflow: hidden;
+            display: flex;
         }
 
         .modal-overlay.active .magazine-modal {
-            opacity: 1;
-            visibility: visible;
             transform: translate(-50%, -50%) scale(1);
         }
 
-        /* 잡지 표지 왼쪽 레이아웃 (제시된 2번째 이미지 복원) */
         .mag-cover {
-            width: 50%;
+            width: 48%;
+            height: 100%;
             background: #e6dfd3;
-            padding: 30px;
+            padding: 28px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -407,37 +711,37 @@
         .mag-header-top {
             display: flex;
             justify-content: space-between;
-            font-size: 10px;
-            letter-spacing: 2px;
+            font-size: 9px;
+            letter-spacing: 1.5px;
             font-weight: 600;
             color: #4a4a4a;
         }
 
         .mag-title-main {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 52px;
+            font-size: 42px;
             line-height: 0.95;
             color: #32382e;
-            margin: 15px 0 5px 0;
+            margin: 10px 0 4px 0;
         }
 
         .mag-subtitle {
-            font-size: 13px;
+            font-size: 11px;
             color: #555;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
 
-        /* 잡지 표지 일러스트 표현 영역 */
         .mag-art {
             flex-grow: 1;
             background: #485949;
-            border-radius: 4px;
+            border-radius: 6px;
             position: relative;
             overflow: hidden;
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            padding: 20px;
+            padding: 16px;
+            min-height: 160px;
         }
 
         .mag-art-bg {
@@ -452,13 +756,13 @@
         .glass-drink {
             position: relative;
             z-index: 2;
-            width: 80px;
-            height: 110px;
+            width: 70px;
+            height: 95px;
             background: rgba(255,255,255,0.25);
             border: 1px solid rgba(255,255,255,0.5);
             border-radius: 6px;
             backdrop-filter: blur(2px);
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -470,13 +774,13 @@
             background: #c86d48;
             border-radius: 2px 2px 4px 4px;
             position: absolute;
-            bottom: 6px;
+            bottom: 5px;
         }
 
-        /* 잡지 오른쪽 안내 텍스트 영역 */
         .mag-info {
-            width: 50%;
-            padding: 40px;
+            width: 52%;
+            height: 100%;
+            padding: 30px 28px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -487,43 +791,217 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 26px;
             color: #2b3a2d;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .plant-of-month {
             background: rgba(116, 140, 114, 0.1);
             border-left: 3px solid #5b7065;
-            padding: 15px;
-            margin: 15px 0 25px 0;
-            border-radius: 0 8px 8px 0;
+            padding: 12px;
+            margin: 12px 0 18px 0;
+            border-radius: 0 6px 6px 0;
         }
 
         .plant-of-month h4 {
-            font-size: 14px;
+            font-size: 13px;
             color: #445446;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .plant-of-month p {
-            font-size: 13px;
+            font-size: 12px;
             color: #666;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         .sub-btn {
             background: #39483a;
             color: #fff;
             border: none;
-            padding: 14px 28px;
-            font-size: 13px;
-            letter-spacing: 2px;
+            padding: 12px 20px;
+            font-size: 12px;
+            letter-spacing: 1.5px;
             cursor: pointer;
             border-radius: 4px;
             transition: background 0.3s;
         }
 
-        .sub-btn:hover {
-            background: #232e24;
+        .sub-btn:hover { background: #232e24; }
+
+        .gene-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%;
+            max-width: 640px;
+            background: #f7f5f0;
+            border-radius: 10px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+            z-index: 109;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 24px;
+        }
+
+        .gene-modal-body {
+            display: flex;
+            gap: 18px;
+            margin-top: 12px;
+        }
+
+        .gene-img-wrapper {
+            width: 42%;
+            height: 240px;
+            border-radius: 6px;
+            overflow: hidden;
+            background: radial-gradient(circle, #f0ebe1 0%, #e3dbcd 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            border: 1px solid #dcd3c5;
+        }
+
+        .gene-img-wrapper img,
+        .gene-img-wrapper svg {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12));
+        }
+
+        .gene-details {
+            width: 58%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .gene-badge {
+            display: inline-block;
+            background: #5b7065;
+            color: #fff;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            letter-spacing: 1px;
+        }
+
+        .gene-info-box {
+            background: rgba(0,0,0,0.03);
+            padding: 8px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            color: #444;
+            margin-bottom: 6px;
+        }
+
+        .gene-info-box span { font-weight: 600; color: #3b4d3c; }
+
+        .price-breakdown {
+            background: #eae3d8;
+            padding: 8px 10px;
+            border-radius: 5px;
+            margin: 8px 0;
+            font-size: 11px;
+        }
+
+        .action-btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .gene-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .btn-save { background: #d0c5b4; color: #333; }
+        .btn-buy { background: #2b3a2d; color: #fff; }
+        .btn-buy:hover { background: #19241a; }
+
+        .loading-box { text-align: center; padding: 30px 0; display: none; }
+        .spinner {
+            width: 36px; height: 36px;
+            border: 3px solid rgba(91, 112, 101, 0.2);
+            border-top: 3px solid #5b7065;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 12px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
+            .logo { font-size: 24px; letter-spacing: 2px; }
+            .nav-links { gap: 8px; }
+            .nav-links a { font-size: 10px; letter-spacing: 0px; }
+            
+            main { padding: 10px 20px; }
+            
+            .categories-container {
+                flex-direction: column;
+                margin: 20px 0 40px 0;
+                gap: 25px;
+            }
+            .circle-wrapper { width: 160px; height: 160px; }
+            
+            .magazine-preview {
+                left: -115px;
+                width: 155px;
+                height: 210px;
+                box-shadow: 4px 8px 20px rgba(0,0,0,0.2);
+                border-radius: 0 10px 10px 0;
+            }
+            .magazine-preview:hover, .magazine-preview:active {
+                left: -75px;
+            }
+            .magazine-preview-inner {
+                padding: 12px 10px;
+            }
+            .magazine-preview-inner .mag-peek-title {
+                font-size: 20px;
+                writing-mode: horizontal-tb;
+            }
+
+            .magazine-modal {
+                flex-direction: column;
+                width: 94%;
+                max-width: 500px;
+                height: auto;
+                max-height: 88vh;
+                overflow-y: auto;
+                border-radius: 12px;
+            }
+
+            .mag-cover, .mag-info {
+                width: 100%;
+                height: auto;
+            }
+
+            .mag-cover {
+                border-right: none;
+                border-bottom: 1px solid #d5cecf;
+                padding: 22px 20px;
+            }
+
+            .mag-info {
+                padding: 24px 20px;
+            }
+
+            .mag-art { height: 160px; }
+
+            .gene-modal-body { flex-direction: column; }
+            .gene-img-wrapper, .gene-details { width: 100%; }
+            .gene-img-wrapper { height: 180px; }
         }
     </style>
 </head>
@@ -531,7 +1009,7 @@
 
     <div class="bg-overlay"></div>
 
-    <!-- 상단 헤더 영역 -->
+    <!-- 헤더 영역 -->
     <header>
         <button class="menu-btn" id="openMenuBtn" aria-label="메뉴 열기">
             <span></span>
@@ -540,29 +1018,33 @@
         </button>
         <div class="logo">CUT & CROP</div>
         <ul class="nav-links">
-            <li><a href="#" class="page-link" data-page="MY PAGE">MY PAGE</a></li>
-            <li><a href="#" class="page-link" data-page="LOG IN">LOG IN</a></li>
-            <li><a href="#" class="page-link" data-page="MAKE ACCOUNT">MAKE ACCOUNT</a></li>
+            <li><a href="#" id="loginBtn">LOG IN</a></li>
+            <li><a href="#" id="signupBtn">SIGN UP</a></li>
+            <li><a href="#" id="myPageBtn">MY PAGE</a></li>
+            <li><a href="#" id="orderStatusBtn">주문/배송</a></li>
         </ul>
     </header>
 
-    <!-- 왼쪽 잡지 커버 미리보기 (마우스 오버 / 클릭 반응) -->
+    <!-- 좌측 잡지 미리보기 Peek -->
     <div class="magazine-preview" id="magazineTrigger">
         <div class="magazine-preview-inner">
-            <h4>Plant<br>& Sip</h4>
+            <div class="mag-peek-header">PLANT MAG</div>
+            <div class="mag-peek-title">Plant<br>& Sip</div>
+            <div class="mag-peek-art">
+                <div class="glass-drink" style="width:38px; height:50px; margin-bottom:0;">
+                    <div class="glass-liquid"></div>
+                    <div style="width:2px; height:32px; background:#2d3a2b; transform:rotate(15deg); position:absolute; top:-6px;"></div>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- 메인 콘텐츠 영역 -->
     <main>
-        <div class="section-title">Recommendation</div>
-
-        <!-- 3개 원형 카테고리 -->
         <div class="categories-container">
             <!-- 1. FLOWER -->
             <div class="category-item" data-category="FLOWER">
                 <div class="circle-wrapper">
-                    <!-- 백합 벡터 그래픽 -->
                     <svg viewBox="0 0 100 100">
                         <path d="M50,90 Q45,60 50,30 Q55,60 50,90" fill="#6d826a" />
                         <path d="M50,45 Q20,35 25,15 Q45,25 50,45" fill="#fcfbf7" stroke="#e0dacb" stroke-width="1"/>
@@ -579,7 +1061,6 @@
             <!-- 2. PLANTS -->
             <div class="category-item" data-category="PLANTS">
                 <div class="circle-wrapper">
-                    <!-- 식물 잎사귀 벡터 그래픽 -->
                     <svg viewBox="0 0 100 100">
                         <path d="M50,85 L50,20" stroke="#4a5d4e" stroke-width="2" />
                         <path d="M50,65 Q30,55 25,40 Q45,45 50,65" fill="#607864" />
@@ -594,7 +1075,6 @@
             <!-- 3. TREE -->
             <div class="category-item" data-category="TREE">
                 <div class="circle-wrapper">
-                    <!-- 나무 줄기/잎 벡터 그래픽 -->
                     <svg viewBox="0 0 100 100">
                         <path d="M45,90 Q50,60 40,25 L43,24 Q53,60 48,90" fill="#5c4d41" />
                         <path d="M42,50 Q25,40 20,25 Q35,30 42,50" fill="#3b4d3c" />
@@ -613,26 +1093,109 @@
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
-                <input type="text" class="search-input" id="aiPromptInput" placeholder="Ask AI for garden Inspiration... [ AI Prompt ]">
+                <input type="text" class="search-input" id="aiPromptInput" placeholder="원하는 식물을 입력하세요">
             </div>
         </div>
     </main>
 
-    <!-- ==================== 팝업 모달 모음 ==================== -->
+    <!-- 모달 컨테이너 오버레이 -->
     <div class="modal-overlay" id="modalOverlay">
         
-        <!-- 1. 카테고리 / 페이지 안내 일반 모달 -->
-        <div class="modal-content" id="generalModal">
-            <button class="close-btn" class="closeModal">&times;</button>
-            <div class="modal-header" id="modalTitle">Category</div>
-            <p id="modalDescription" style="line-height: 1.6; color: #555;">상세 내용이 들어가는 자리입니다.</p>
+        <!-- 1. 기본 안내 팝업 -->
+        <div class="general-modal" id="generalModal">
+            <button class="close-btn">&times;</button>
+            <div class="modal-header" id="modalTitle">Notice</div>
+            <p id="modalDescription" style="line-height: 1.6; color: #555;">내용</p>
         </div>
 
-        <!-- 2. 확대된 잡지 모달 (두번째 사진 디자인 재현) -->
-        <div class="magazine-modal" id="magazineModal">
-            <button class="close-btn" id="closeMagBtn">&times;</button>
+        <!-- 2. 로그인 팝업 -->
+        <div class="auth-modal" id="loginModal">
+            <button class="close-btn">&times;</button>
+            <div class="modal-header">LOG IN</div>
+            <p style="font-size: 12px; color: #777; margin-bottom: 16px;">CUT & CROP 바이오 디자인 스튜디오 회원 로그인</p>
+            <form onsubmit="handleAuth(event, '로그인')">
+                <div class="form-group">
+                    <label>이메일 주소</label>
+                    <input type="email" placeholder="example@plant.com" required>
+                </div>
+                <div class="form-group">
+                    <label>비밀번호</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="auth-submit-btn">로그인하기</button>
+            </form>
+        </div>
+
+        <!-- 3. 회원가입 팝업 -->
+        <div class="auth-modal" id="signupModal">
+            <button class="close-btn">&times;</button>
+            <div class="modal-header">SIGN UP</div>
+            <p style="font-size: 12px; color: #777; margin-bottom: 16px;">맞춤형 AI 유전자 가드닝 멤버십 가입</p>
+            <form onsubmit="handleAuth(event, '회원가입')">
+                <div class="form-group">
+                    <label>이름</label>
+                    <input type="text" placeholder="홍길동" required>
+                </div>
+                <div class="form-group">
+                    <label>이메일 주소</label>
+                    <input type="email" placeholder="example@plant.com" required>
+                </div>
+                <div class="form-group">
+                    <label>비밀번호 설정</label>
+                    <input type="password" placeholder="8자리 이상 입력" required>
+                </div>
+                <button type="submit" class="auth-submit-btn">가입 완료하기</button>
+            </form>
+        </div>
+
+        <!-- 4. 식물기관 학술 정보를 반영한 카테고리 종류 갤러리 팝업 -->
+        <div class="category-gallery-modal" id="categoryGalleryModal">
+            <button class="close-btn">&times;</button>
+            <div class="modal-header" id="galleryTitle">FLOWER SPECIES</div>
+            <p style="font-size: 11px; color: #777; margin-bottom: 4px;">
+                🌿 식물기관 출처: 국립수목원(KNA), 국립원예특작과학원(NIHHS), 국립생물자원관(NIBR)
+            </p>
             
-            <!-- 잡지 커버 (좌측) -->
+            <div class="species-grid" id="speciesGrid">
+                <!-- 동적으로 카드 삽입 -->
+            </div>
+        </div>
+
+        <!-- 5. 마이페이지 (내가 만든/보관한 식물 목록) -->
+        <div class="mypage-modal" id="myPageModal">
+            <button class="close-btn">&times;</button>
+            <div class="modal-header">MY CREATED PLANTS</div>
+            <p style="font-size: 12px; color: #777;">내가 AI 유전자 편집으로 생성하여 보관 중인 식물 목록입니다.</p>
+            
+            <div class="created-plants-list" id="createdPlantsContainer">
+                <!-- 보관 목록 동적 출력 -->
+            </div>
+        </div>
+
+        <!-- 6. 주문 내역 및 배송 현황 팝업 -->
+        <div class="order-modal" id="orderModal">
+            <button class="close-btn">&times;</button>
+            <div class="modal-header">ORDER & DELIVERY</div>
+            <p style="font-size: 12px; color: #777;">배양 및 맞춤 제작 배송 진행 현황</p>
+            
+            <div id="orderListContainer">
+                <!-- 주문 목록 동적 출력 -->
+            </div>
+        </div>
+
+        <!-- 7. 회사 소개 팝업 (ABOUT US) -->
+        <div class="about-modal" id="aboutModal">
+            <button class="close-btn">&times;</button>
+            <div class="modal-header" style="font-size: 28px; border:none; margin-bottom: 10px;">CUT & CROP Studio</div>
+            <p style="font-size: 13px; color: #555; line-height: 1.8;">
+                <strong>CUT & CROP</strong>은 현대 바이오 유전공학(CRISPR-Cas9)과 감각적인 가드닝 디자인을 융합한 독전적 바이오 디자인 스튜디오입니다.
+                국립수목원 및 농촌진흥청 학술 자원을 바탕으로 실내 최적화 소형 품종을 연구합니다.
+            </p>
+        </div>
+
+        <!-- 8. 잡지 확대 팝업 -->
+        <div class="magazine-modal" id="magazineModal">
+            <button class="close-btn">&times;</button>
             <div class="mag-cover">
                 <div class="mag-header-top">
                     <span>CIRER SIMPEAKE</span>
@@ -642,154 +1205,539 @@
                     <h1 class="mag-title-main">Plant & Sip</h1>
                     <div class="mag-subtitle">Magazina / Plant Magazine</div>
                 </div>
-                
-                <!-- 일러스트 그래픽 영역 -->
                 <div class="mag-art">
                     <div class="mag-art-bg"></div>
                     <div class="glass-drink">
                         <div class="glass-liquid"></div>
-                        <!-- 로즈마리 스틱 표현 -->
-                        <div style="width:3px; height:60px; background:#2d3a2b; transform:rotate(15deg); position:absolute; top:-10px;"></div>
+                        <div style="width:3px; height:55px; background:#2d3a2b; transform:rotate(15deg); position:absolute; top:-10px;"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- 잡지 상세 내용 및 구독 신청 (우측) -->
             <div class="mag-info">
                 <h3>Plant & Sip Monthly</h3>
-                <p style="color: #666; font-size: 14px; line-height: 1.6;">
-                    일상 속에 녹아드는 식물과 함께하는 음료 한 잔의 여유. 매월 새로운 식물 관리법과 가드닝 팁을 전달합니다.
+                <p style="color: #666; font-size: 13px; line-height: 1.6;">
+                    일상 속에 녹아드는 컴팩트 식물과 함께하는 음료 한 잔의 여유. 매월 새로운 유전자 편집 소형 식물과 가이드를 발행합니다.
                 </p>
-
-                <!-- 이번달의 식물 안내 -->
                 <div class="plant-of-month">
-                    <h4>이번 달의 식물: 몬스테라 & 칵테일 로즈마리</h4>
-                    <p>
-                        9월호에서는 공기 정화 능력이 뛰어난 몬스테라 델리시오사와 홈 카페에서 쉽게 곁들일 수 있는 허브 음료 레시피를 소개합니다.
-                    </p>
+                    <h4>이번 달의 식물: 미니 몬스테라 & 칵테일 로즈마리</h4>
+                    <p>공기 정화 효능을 높인 소형 몬스테라와 가드닝 음료 레시피를 소개합니다.</p>
                 </div>
+                <div>
+                    <button class="sub-btn" onclick="alert('월간 구독 신청이 완료되었습니다!')">월간 구독 신청하기 (월 9,900원)</button>
+                </div>
+            </div>
+        </div>
 
-                <div style="margin-top: 10px;">
-                    <p style="font-size: 12px; color: #888; margin-bottom: 12px;">월간 잡지 정기 구독 서비스 (월 9,900원)</p>
-                    <button class="sub-btn" onclick="alert('구독 신청이 완료되었습니다!')">구독 서비스 신청하기</button>
+        <!-- 9. AI 유전자 결과 및 구매 팝업 -->
+        <div class="gene-modal" id="geneModal">
+            <button class="close-btn">&times;</button>
+            <div class="loading-box" id="geneLoading">
+                <div class="spinner"></div>
+                <p style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: #3b4d3c;">Synthesizing Plant Genetics...</p>
+                <p style="font-size: 12px; color: #888; margin-top: 5px;">프롬프트를 기반으로 DNA를 편집하고 가격을 산출하는 중입니다.</p>
+            </div>
+
+            <div id="geneResultContent" style="display: none;">
+                <span class="gene-badge">CRISPR-Cas9 AI HYBRID</span>
+                <div class="gene-title" id="plantGenTitle" style="font-family: 'Cormorant Garamond', serif; font-size:24px; color:#2b3a2d;">Lumina Lily</div>
+                <div class="gene-code" id="plantGenCode" style="font-family:monospace; font-size:12px; color:#777; margin-bottom:8px;">GENE CODE: #CR-2026-NEXUS</div>
+                
+                <div class="gene-modal-body">
+                    <div class="gene-img-wrapper">
+                        <!-- 고화질 수채화 벡터 표현 -->
+                    </div>
+                    <div class="gene-details">
+                        <div>
+                            <div class="gene-info-box">
+                                <span>향기 & 외형:</span> <span id="plantGenLook">달콤한 백합향 / 발광 엽맥 패턴</span>
+                            </div>
+                            <div class="gene-info-box">
+                                <span>유전자 편집 난이도:</span> <span id="plantGenComplexity">★★★★☆ (Level 4)</span>
+                            </div>
+                            <div class="gene-info-box">
+                                <span>식물 크기 스케일:</span> <span id="plantGenSize">소형 컴팩트 (28cm)</span>
+                            </div>
+
+                            <div class="price-breakdown">
+                                <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+                                    <span>기본 배양비:</span> <span>35,000원</span>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+                                    <span>유전자 편집 / 크기 할증:</span> <span id="surchargeText">+30,000원</span>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; font-weight:bold; border-top:1px solid #c8bea8; padding-top:4px; margin-top:4px; color:#2b3a2d;">
+                                    <span>최종 구매 가격:</span> <span id="finalPriceText">65,000원</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="action-btn-group">
+                            <button class="gene-btn btn-save" id="savePlantBtn">마이페이지 보관</button>
+                            <button class="gene-btn btn-buy" id="buyPlantBtn">지금 바로 구매하기</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- 3. 좌측 햄버거 메뉴 슬라이드 드로어 -->
+    <!-- 햄버거 메뉴 슬라이드 드로어 -->
     <div class="menu-drawer" id="menuDrawer">
         <button class="close-btn" id="closeMenuBtn">&times;</button>
-        <div class="logo" style="font-size: 24px; margin-top:20px;">CUT & CROP</div>
+        <div class="logo" style="font-size: 22px; margin-top:10px;">CUT & CROP</div>
         <ul>
-            <li><a href="#" class="page-link" data-page="HOME">HOME</a></li>
-            <li><a href="#" class="page-link" data-page="FLOWER">FLOWER</a></li>
-            <li><a href="#" class="page-link" data-page="PLANTS">PLANTS</a></li>
-            <li><a href="#" class="page-link" data-page="TREE">TREE</a></li>
-            <li><a href="#" class="page-link" data-page="MAGAZINE">MAGAZINE</a></li>
+            <li><a href="#" id="drawerLogin">LOG IN (로그인)</a></li>
+            <li><a href="#" id="drawerSignup">SIGN UP (회원가입)</a></li>
+            <li><a href="#" id="drawerMyPage">MY PAGE (내 보관함)</a></li>
+            <li><a href="#" id="drawerOrder">ORDER STATUS (주문/배송)</a></li>
+            <li><a href="#" class="drawer-cat-link" data-cat="FLOWER">FLOWER SPECIES</a></li>
+            <li><a href="#" class="drawer-cat-link" data-cat="PLANTS">PLANTS SPECIES</a></li>
+            <li><a href="#" class="drawer-cat-link" data-cat="TREE">TREE SPECIES</a></li>
+            <li><a href="#" id="drawerMag">MAGAZINE</a></li>
+            <li><a href="#" id="drawerAbout">ABOUT US (회사 소개)</a></li>
         </ul>
     </div>
 
-    <!-- ==================== 자바스크립트 ==================== -->
     <script>
-        // 요소 선택자
-        const modalOverlay = document.getElementById('modalOverlay');
-        const generalModal = document.getElementById('generalModal');
-        const magazineModal = document.getElementById('magazineModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalDescription = document.getElementById('modalDescription');
-        
-        const magazineTrigger = document.getElementById('magazineTrigger');
-        const openMenuBtn = document.getElementById('openMenuBtn');
-        const closeMenuBtn = document.getElementById('closeMenuBtn');
-        const menuDrawer = document.getElementById('menuDrawer');
-        const aiPromptInput = document.getElementById('aiPromptInput');
-
-        // 팝업 열기 함수 (일반 모달)
-        function openGeneralModal(title, text) {
-            modalTitle.innerText = title;
-            modalDescription.innerText = text;
-            magazineModal.style.display = 'none';
-            generalModal.style.display = 'block';
-            modalOverlay.classList.add('active');
+        // 모달 도우미 함수 정의
+        function hideAllModals() {
+            const modalIds = [
+                'generalModal', 'loginModal', 'signupModal', 
+                'categoryGalleryModal', 'myPageModal', 'orderModal', 
+                'aboutModal', 'magazineModal', 'geneModal'
+            ];
+            modalIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = 'none';
+            });
         }
 
-        // 잡지 모달 열기 함수 (2번째 사진 구현)
-        function openMagazineModal() {
-            generalModal.style.display = 'none';
-            magazineModal.style.display = 'flex';
-            modalOverlay.classList.add('active');
+        function showOverlay() {
+            const overlay = document.getElementById('modalOverlay');
+            if (overlay) overlay.classList.add('active');
         }
 
-        // 모든 모달 닫기
         function closeModal() {
-            modalOverlay.classList.remove('active');
+            const overlay = document.getElementById('modalOverlay');
+            if (overlay) overlay.classList.remove('active');
+            hideAllModals();
         }
 
-        // 1. 3개 원형 클릭 시 카테고리 팝업 (꽃, 식물, 나무)
+        function showNotice(title, desc) {
+            hideAllModals();
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDescription').innerText = desc;
+            document.getElementById('generalModal').style.display = 'block';
+            showOverlay();
+        }
+
+        function handleAuth(event, type) {
+            event.preventDefault();
+            alert(`${type} 처리가 성공적으로 완료되었습니다.`);
+            closeModal();
+        }
+
+        /* 
+         * 식물기관 학술 인용 데이터베이스 (국립수목원, 농촌진흥청 국립원예특작과학원, 국립생물자원관 인용)
+         */
+        const categoryData = {
+            FLOWER: [
+                { 
+                    name: "금강초롱꽃 (Hanabusaya)", scent: "은은한 야생화 아로마", size: "22cm (마이크로)", look: "초롱 모양의 오묘한 보랏빛 꽃잎", price: 54000,
+                    source: "국립수목원 한국 특산 희귀식물",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,90 Q45,60 50,30" stroke="#526e56" stroke-width="3" fill="none"/><path d="M50,30 Q35,45 30,65 Q50,60 50,30" fill="#786fa6"/><path d="M50,30 Q65,45 70,65 Q50,60 50,30" fill="#635a96"/><path d="M50,30 Q40,50 42,70 Q58,70 60,50 Z" fill="#8c7ae6" opacity="0.9"/><circle cx="50" cy="70" r="2" fill="#f5cd79"/></svg>`
+                },
+                { 
+                    name: "미선나무 꽃 (Abeliophyllum)", scent: "달콤하고 그윽한 전통 향", size: "32cm (소형)", look: "하얀 4개 꽃잎과 부채 열매 수형", price: 48000,
+                    source: "국립생물자원관 멸종위기 야생생물",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,90 Q52,65 50,35" stroke="#4a392d" stroke-width="3.5" fill="none"/><circle cx="50" cy="25" r="8" fill="#ffffff" stroke="#dcd3c5"/><circle cx="36" cy="35" r="7" fill="#ffffff" stroke="#dcd3c5"/><circle cx="64" cy="35" r="7" fill="#ffffff" stroke="#dcd3c5"/><circle cx="50" cy="45" r="8" fill="#ffffff" stroke="#dcd3c5"/><circle cx="50" cy="35" r="4" fill="#f8c291"/></svg>`
+                },
+                { 
+                    name: "카사블랑카 백합", scent: "짙고 고상한 아로마", size: "35cm (소형)", look: "순백의 대형 겹꽃잎", price: 45000,
+                    source: "농촌진흥청 국립원예특작과학원",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,92 Q48,62 50,35" stroke="#5c735e" stroke-width="3.5" fill="none"/><path d="M50,35 Q20,25 25,8 Q45,18 50,35" fill="#ffffff" stroke="#d4cebe"/><path d="M50,35 Q80,25 75,8 Q55,18 50,35" fill="#ffffff" stroke="#d4cebe"/><path d="M50,35 Q25,48 10,32 Q32,28 50,35" fill="#fcfaf2" stroke="#d4cebe"/><path d="M50,35 Q75,48 90,32 Q68,28 50,35" fill="#fcfaf2" stroke="#d4cebe"/><circle cx="50" cy="6" r="2" fill="#a37446"/></svg>`
+                },
+                { 
+                    name: "에덴 로즈 장미", scent: "달콤한 클래식 장미향", size: "25cm (미니)", look: "분홍빛 겹 장미 수형", price: 38000,
+                    source: "세계장미협회 우수 품종 DB",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,90 Q52,65 50,42" stroke="#485c49" stroke-width="3" fill="none"/><circle cx="50" cy="32" r="22" fill="#f4c2c2"/><circle cx="50" cy="32" r="16" fill="#e89ca3"/><circle cx="50" cy="32" r="10" fill="#d8707c"/></svg>`
+                },
+                { 
+                    name: "루미너스 라벤더", scent: "은은한 허브 릴렉싱 향", size: "20cm (미니)", look: "야간 미세 발광 보라 꽃", price: 52000,
+                    source: "농촌진흥청 허브 수종 도감",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,90 L50,25" stroke="#5b7065" stroke-width="2.5"/><circle cx="50" cy="20" r="4" fill="#9b82c1"/><circle cx="44" cy="28" r="4.5" fill="#8a6db5"/><circle cx="56" cy="28" r="4.5" fill="#8a6db5"/><circle cx="50" cy="17" r="1.5" fill="#ffffff"/></svg>`
+                },
+                { 
+                    name: "바이오 튤립 에디션", scent: "싱그러운 청아한 봄향", size: "22cm (미니)", look: "오렌지-레드 유전자 봉오리", price: 41000,
+                    source: "국립원예특작과학원 화훼과",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,92 Q48,60 50,38" stroke="#4e6350" stroke-width="3" fill="none"/><path d="M50,38 Q28,28 32,8 Q50,22 50,38" fill="#e05a47"/><path d="M50,38 Q72,28 68,8 Q50,22 50,38" fill="#d14936"/><path d="M50,38 Q38,18 50,8 Q62,18 50,38" fill="#ef6b58"/></svg>`
+                },
+                { 
+                    name: "달빛 아네모네", scent: "은밀한 야생화 향", size: "18cm (미니)", look: "네이비 바이올렛 수술 꽃", price: 48000,
+                    source: "국립수목원 자생 자원식물",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,90 Q52,60 50,32" stroke="#4a5e4b" stroke-width="3"/><circle cx="28" cy="32" r="14" fill="#5c6b8c"/><circle cx="72" cy="32" r="14" fill="#5c6b8c"/><circle cx="50" cy="14" r="14" fill="#6e7d9e"/><circle cx="50" cy="32" r="8" fill="#1f2636"/></svg>`
+                },
+                { 
+                    name: "스노우드롭 릴리", scent: "맑고 파우더리한 은은함", size: "15cm (마이크로)", look: "드롭형 하얀 깃털 꽃잎", price: 36000,
+                    source: "영국 왕립식물원(RHS) 등록 수종",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M30,90 Q28,35 58,22 Q68,16 62,35" stroke="#526955" stroke-width="2.8" fill="none"/><path d="M62,35 Q50,58 44,65 Q58,58 62,35" fill="#ffffff" stroke="#c8c2b4"/><path d="M62,35 Q74,58 80,65 Q66,58 62,35" fill="#ffffff" stroke="#c8c2b4"/></svg>`
+                },
+                { 
+                    name: "스칼렛 수국 미니", scent: "진한 달콤함과 과일향", size: "28cm (소형)", look: "풍성한 빨간 붉은 수국 송이", price: 54000,
+                    source: "국립원예특작과학원 신품종",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,90 Q52,65 50,40" stroke="#485c49" stroke-width="3"/><circle cx="50" cy="25" r="22" fill="#c74242"/><circle cx="42" cy="18" r="6" fill="#e86b6b"/><circle cx="58" cy="18" r="6" fill="#e86b6b"/></svg>`
+                }
+            ],
+            PLANTS: [
+                { 
+                    name: "몬스테라 미니마", scent: "산뜻한 숲속 흙내음", size: "38cm (소형)", look: "갈라진 대형 에메랄드 잎", price: 58000,
+                    source: "농촌진흥청 공기정화 실험 1위",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,92 L50,22" stroke="#4a5d4e" stroke-width="3" /><path d="M50,70 Q22,55 18,35 Q42,42 50,70" fill="#4e6652" /><path d="M50,58 Q78,45 82,28 Q58,35 50,58" fill="#5e7a63" /><path d="M50,42 Q25,28 30,12 Q50,22 50,42" fill="#3a4a3e" /></svg>`
+                },
+                { 
+                    name: "박쥐란 (Platycerium)", scent: "무향 (공기정화 숲 향)", size: "28cm (소형)", look: "사슴 뿔 형태의 유연한 이형엽", price: 62000,
+                    source: "국립수목원 열대식물자원연구센터",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,90 Q50,60 50,40" stroke="#3b4d3e" stroke-width="4"/><path d="M50,40 Q20,30 10,15 Q30,20 45,38" fill="#526e56"/><path d="M50,40 Q80,30 90,15 Q70,20 55,38" fill="#526e56"/><path d="M50,40 Q35,15 30,5 Q48,15 50,40" fill="#628267"/></svg>`
+                },
+                { 
+                    name: "칼라테아 오르비폴리아", scent: "은은한 민트 향", size: "25cm (미니)", look: "선명한 은빛 부채꼴 스트라이프", price: 42000,
+                    source: "국립생물자원관 자원식물 DB",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,90 Q48,60 50,30" stroke="#435446" stroke-width="2.5"/><ellipse cx="50" cy="35" rx="32" ry="24" fill="#607865" stroke="#38473c" stroke-width="1.5"/><path d="M50,11 L50,59" stroke="#bfd1c2" stroke-width="2"/></svg>`
+                },
+                { 
+                    name: "바이오 아글라오네마", scent: "무향 / 강력 음이온 방출", size: "30cm (소형)", look: "붉은 유전자 발현 잎맥", price: 49000,
+                    source: "농촌진흥청 미세먼지 저감 수종",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,90 Q50,50 50,20" stroke="#4a5d4e" stroke-width="2.5"/><path d="M50,80 Q20,60 22,35 Q45,45 50,80" fill="#8c3b42"/><path d="M50,65 Q80,45 78,20 Q55,30 50,65" fill="#a8444c"/></svg>`
+                },
+                { 
+                    name: "보스턴 페더 고사리", scent: "청량한 습지 피톤치드", size: "22cm (미니)", look: "풍성한 깃털 형태 침엽 군집", price: 39000,
+                    source: "NASA/농진청 에코 공기정화 수종",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,90 Q30,60 20,20" stroke="#425745" stroke-width="2" fill="none"/><path d="M50,90 Q70,60 80,20" stroke="#425745" stroke-width="2" fill="none"/><path d="M50,90 Q50,50 50,10" stroke="#526e56" stroke-width="2" fill="none"/></svg>`
+                },
+                { 
+                    name: "바이오 피토니아 나브", scent: "신선한 우림 아로마", size: "12cm (마이크로)", look: "그물망 그레이스 핑크 엽맥", price: 34000,
+                    source: "국립원예특작과학원 관엽 연구팀",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,90 Q48,60 50,30" stroke="#3b4d3e" stroke-width="2"/><ellipse cx="50" cy="35" rx="26" ry="18" fill="#3b5440"/><path d="M50,17 L50,53" stroke="#e8a2a8" stroke-width="2"/></svg>`
+                },
+                { 
+                    name: "루미나 산세베리아", scent: "무향 / 야간 산소 방출", size: "35cm (소형)", look: "우뚝 선 세로 패턴 단검 잎", price: 44000,
+                    source: "농촌진흥청 침실 공기정화 연구",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M35,90 Q30,45 38,12 Q45,45 35,90" fill="#4a5e4c"/><path d="M50,90 Q45,30 52,5 Q60,30 50,90" fill="#627a64"/><path d="M65,90 Q60,50 66,20 Q72,50 65,90" fill="#3d4f3e"/></svg>`
+                },
+                { 
+                    name: "벨벳 알로카시아", scent: "우디하고 담백한 흙향", size: "32cm (소형)", look: "넓고 두꺼운 하트형 화이트 엽맥", price: 51000,
+                    source: "국립생물자원관 열대 자원",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,90 L50,25" stroke="#364738" stroke-width="3"/><path d="M50,30 Q20,10 15,35 Q35,55 50,80" fill="#2d3a2e"/><path d="M50,30 Q80,10 85,35 Q65,55 50,80" fill="#2d3a2e"/></svg>`
+                },
+                { 
+                    name: "네온 스킨답서스", scent: "신선한 라임 허브향", size: "18cm (미니)", look: "형광 연두빛 하트모양 덩굴 잎", price: 36000,
+                    source: "농촌진흥청 초보자 공기정화 수종",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,90 Q30,60 45,30" stroke="#485c49" stroke-width="2" fill="none"/><path d="M45,30 Q25,15 20,35 Q38,50 45,65" fill="#a3e048"/><path d="M45,30 Q65,15 70,35 Q52,50 45,65" fill="#baf062"/></svg>`
+                }
+            ],
+            TREE: [
+                { 
+                    name: "구상나무 (Abies koreana)", scent: "청량한 진한 솔향 피톤치드", size: "42cm (소형)", look: "푸른빛 살짝 도는 한국 고유 바늘잎 수형", price: 95000,
+                    source: "국립수목원 한반도 특산 침엽수종",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,92 L50,70" stroke="#3d2f25" stroke-width="5"/><polygon points="50,8 24,42 34,42 16,70 84,70 66,42 76,42" fill="#3b6354" stroke="#233f35" stroke-width="1.5"/></svg>`
+                },
+                { 
+                    name: "올리브 분재 분목", scent: "내추럴 피톤치드 우디향", size: "38cm (소형)", look: "은빛 은은한 잎과 고목 줄기", price: 85000,
+                    source: "농촌진흥청 국립원예특작과학원",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M45,92 Q52,65 40,32 L44,30 Q56,65 48,92" fill="#5c4d41" /><path d="M42,52 Q20,40 18,24 Q36,30 42,52" fill="#3b4d3c" /><path d="M46,42 Q70,30 74,16 Q58,20 46,42" fill="#4a5e4c" /></svg>`
+                },
+                { 
+                    name: "블루아이스 미니 편백", scent: "진한 삼나무 침엽수향", size: "45cm (중형)", look: "청빙색 침엽 조형 수형", price: 98000,
+                    source: "산림청 유용 산림 수목 DB",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,92 L50,75" stroke="#4a3b32" stroke-width="5"/><polygon points="50,8 20,42 32,42 12,72 88,72 68,42 80,42" fill="#527375" stroke="#364e50" stroke-width="1.5"/></svg>`
+                },
+                { 
+                    name: "바이오 분재 소나무", scent: "묵직한 전통 솔향", size: "30cm (소형)", look: "CRISPR 미니 수형 소나무", price: 110000,
+                    source: "국립수목원 분재 예술 연구",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M55,92 Q35,70 58,45 Q70,30 50,15" stroke="#483a2e" stroke-width="6" fill="none"/><circle cx="48" cy="15" r="18" fill="#2d4230"/><circle cx="68" cy="32" r="15" fill="#354d38"/></svg>`
+                },
+                { 
+                    name: "은빛 자작나무 수목", scent: "맑고 깨끗한 산림향", size: "48cm (중형)", look: "하얀 은빛 줄기와 연연두 잎", price: 92000,
+                    source: "산림청 수목 자원 데이터",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M48,92 L52,15" stroke="#f0ebe1" stroke-width="5"/><circle cx="20" cy="30" r="10" fill="#a2b893"/><circle cx="80" cy="18" r="12" fill="#b0c4a1"/><circle cx="52" cy="12" r="14" fill="#8eab7d"/></svg>`
+                },
+                { 
+                    name: "미니 단풍나무 분재", scent: "은은한 고목 우디 아로마", size: "28cm (소형)", look: "붉은 단풍잎 수형 미니 트레인", price: 89000,
+                    source: "국립수목원 조경 수종",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M52,92 Q46,60 50,30" stroke="#4a3629" stroke-width="4.5" fill="none"/><circle cx="22" cy="25" r="13" fill="#b84235"/><circle cx="78" cy="16" r="14" fill="#a3362a"/><circle cx="50" cy="22" r="17" fill="#c74b3c"/></svg>`
+                },
+                { 
+                    name: "바이오 바오밥 에디션", scent: "이국적인 담백한 흙향", size: "42cm (소형)", look: "두꺼운 줄기 코끼리 목질 수형", price: 125000,
+                    source: "국립생물자원관 해외 수종 DB",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M38,92 Q35,45 25,25 Q45,35 50,92 L62,92 Q65,45 75,25 Q55,35 50,92" fill="#5e4c3e"/><ellipse cx="50" cy="15" rx="18" ry="10" fill="#3c5233"/></svg>`
+                },
+                { 
+                    name: "에메랄드 동백나무", scent: "은은하고 아늑한 은화향", size: "36cm (소형)", look: "진녹색 윤기나는 잎과 분홍 동백", price: 95000,
+                    source: "국립수목원 남부 자생 유전자원",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,92 Q48,60 50,30" stroke="#4a392d" stroke-width="4" fill="none"/><circle cx="32" cy="35" r="14" fill="#2d4233"/><circle cx="50" cy="20" r="16" fill="#1e3023"/><circle cx="50" cy="20" r="7" fill="#e06578"/></svg>`
+                },
+                { 
+                    name: "크리스탈 가문비나무", scent: "청량한 침엽수 삼림욕 향", size: "45cm (중형)", look: "삼각형 대칭형 푸른 침엽 조형", price: 105000,
+                    source: "산림청 고산지역 생태 자원",
+                    svg: `<svg viewBox="0 0 100 100"><path d="M50,92 L50,75" stroke="#3d3027" stroke-width="5"/><polygon points="50,10 25,45 35,45 15,75 85,75 65,45 75,45" fill="#2d5242" stroke="#1c362b" stroke-width="1.5"/></svg>`
+                }
+            ]
+        };
+
+        const aiGlowSvgTemplates = [
+            `<svg viewBox="0 0 100 100"><path d="M50,92 L50,22" stroke="#4a5d4e" stroke-width="3" fill="none"/><path d="M50,70 Q22,55 18,35 Q42,42 50,70" fill="#4e6652"/><path d="M50,58 Q78,45 82,28 Q58,35 50,58" fill="#5e7a63"/><path d="M50,38 Q20,28 25,10 Q45,20 50,38" fill="#ffffff" stroke="#d4cebe"/><path d="M50,38 Q80,28 75,10 Q55,20 50,38" fill="#ffffff" stroke="#d4cebe"/><circle cx="50" cy="18" r="3.5" fill="#8a6db5"/></svg>`,
+            `<svg viewBox="0 0 100 100"><path d="M50,92 Q48,60 50,35" stroke="#3b4d3e" stroke-width="3.5" fill="none"/><path d="M50,68 Q25,58 20,45 Q40,53 50,68" fill="#4a5e4c"/><circle cx="50" cy="28" r="20" fill="#7a629b"/><circle cx="50" cy="28" r="14" fill="#9173b8"/><circle cx="50" cy="28" r="3" fill="#ffffff" opacity="0.9"/></svg>`,
+            `<svg viewBox="0 0 100 100"><path d="M50,92 L50,15" stroke="#526e56" stroke-width="4"/><polygon points="50,12 28,42 38,42 20,68 42,68 50,72 58,68 80,68 62,42 72,42" fill="#3f6655" stroke="#253e33" stroke-width="1.5"/><circle cx="50" cy="25" r="2" fill="#88a898"/></svg>`,
+            `<svg viewBox="0 0 100 100"><path d="M50,90 Q48,55 50,25" stroke="#2d3a2e" stroke-width="3"/><ellipse cx="50" cy="30" rx="30" ry="22" fill="#334d38" stroke="#1d2d20" stroke-width="2"/><path d="M50,8 L50,52" stroke="#a1e0b5" stroke-width="2"/></svg>`
+        ];
+
+        // 앱 데이터 상태
+        let mySavedPlants = [
+            {
+                title: "Lumina Mon-Lily",
+                code: "#CR-2026-NEXUS",
+                look: "달콤한 백합향 / 발광 엽맥 패턴 (국립수목원 학술참고)",
+                price: 65000,
+                svg: aiGlowSvgTemplates[0]
+            }
+        ];
+
+        let myOrders = [
+            {
+                id: "ORD-2026-8819",
+                title: "Lumina Mon-Lily Custom",
+                price: 65000,
+                step: 2,
+                stepText: "CRISPR-Cas9 유전자 실내 배양 중"
+            }
+        ];
+
+        let currentGenePlant = null;
+
+        document.getElementById('loginBtn')?.addEventListener('click', (e) => { e.preventDefault(); hideAllModals(); document.getElementById('loginModal').style.display = 'block'; showOverlay(); });
+        document.getElementById('signupBtn')?.addEventListener('click', (e) => { e.preventDefault(); hideAllModals(); document.getElementById('signupModal').style.display = 'block'; showOverlay(); });
+        document.getElementById('drawerLogin')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('menuDrawer').classList.remove('open'); hideAllModals(); document.getElementById('loginModal').style.display = 'block'; showOverlay(); });
+        document.getElementById('drawerSignup')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('menuDrawer').classList.remove('open'); hideAllModals(); document.getElementById('signupModal').style.display = 'block'; showOverlay(); });
+
+        document.getElementById('myPageBtn')?.addEventListener('click', (e) => { e.preventDefault(); openMyPage(); });
+        document.getElementById('drawerMyPage')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('menuDrawer').classList.remove('open'); openMyPage(); });
+
+        document.getElementById('orderStatusBtn')?.addEventListener('click', (e) => { e.preventDefault(); openOrders(); });
+        document.getElementById('drawerOrder')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('menuDrawer').classList.remove('open'); openOrders(); });
+
+        document.getElementById('drawerMag')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('menuDrawer').classList.remove('open'); hideAllModals(); document.getElementById('magazineModal').style.display = 'flex'; showOverlay(); });
+        document.getElementById('drawerAbout')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('menuDrawer').classList.remove('open'); hideAllModals(); document.getElementById('aboutModal').style.display = 'block'; showOverlay(); });
+
+        document.getElementById('magazineTrigger')?.addEventListener('click', () => { hideAllModals(); document.getElementById('magazineModal').style.display = 'flex'; showOverlay(); });
+
+        // 원형 카테고리 클릭 핸들러 (랜덤 셔플 알고리즘)
+        function openCategory(catKey) {
+            hideAllModals();
+            document.getElementById('galleryTitle').innerText = `${catKey} SPECIES`;
+            const grid = document.getElementById('speciesGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const shuffledItems = [...(categoryData[catKey] || [])];
+            for (let i = shuffledItems.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledItems[i], shuffledItems[j]] = [shuffledItems[j], shuffledItems[i]];
+            }
+
+            shuffledItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'species-card';
+                card.innerHTML = `
+                    <div class="species-img-box">${item.svg}</div>
+                    <div class="species-details">
+                        <span class="species-source-tag">${item.source}</span>
+                        <div class="species-name">${item.name}</div>
+                        <div class="species-spec-list">
+                            <div><span>향기:</span> ${item.scent}</div>
+                            <div><span>크기:</span> ${item.size}</div>
+                            <div><span>외형:</span> ${item.look}</div>
+                        </div>
+                        <div style="font-weight:bold; color:#2b3a2d; margin-bottom:8px; font-size:13px;">${item.price.toLocaleString()}원</div>
+                        <button class="buy-now-btn" onclick="buyDirect('${item.name}', ${item.price})">바로 구매하기</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            document.getElementById('categoryGalleryModal').style.display = 'block';
+            showOverlay();
+        }
+
         document.querySelectorAll('.category-item').forEach(item => {
             item.addEventListener('click', () => {
-                const category = item.getAttribute('data-category');
-                let infoText = '';
-                
-                if(category === 'FLOWER') {
-                    infoText = '꽃 카테고리 페이지입니다. 아름다운 계절별 꽃과 꽃다발 연출 팁을 만나보세요.';
-                } else if(category === 'PLANTS') {
-                    infoText = '식물 카테고리 페이지입니다. 실내 공기 정화 식물 및 인테리어 식물 가이드를 제공합니다.';
-                } else if(category === 'TREE') {
-                    infoText = '나무 카테고리 페이지입니다. 묘목 및 반려나무 케어, 분재 관련 소식을 전달합니다.';
-                }
-                
-                openGeneralModal(`${category} CATEGORY`, infoText);
+                const cat = item.getAttribute('data-category');
+                openCategory(cat);
             });
         });
 
-        // 2. 잡지 영역 클릭/마우스 가까이 가져갈 때 잡지 팝업 열기
-        magazineTrigger.addEventListener('click', openMagazineModal);
-        // 마우스 호버 시 자연스럽게 잡지 팝업을 유도할 수 있도록 클릭 이벤트 연결
-
-        // 3. 상단 네비게이션 버튼 (LOGIN, MY PAGE, MAKE ACCOUNT) 클릭 시
-        document.querySelectorAll('.page-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const pageName = link.getAttribute('data-page');
-                menuDrawer.classList.remove('open');
-                openGeneralModal(pageName, `${pageName} 화면으로 이동합니다.`);
+        function buyDirect(name, price) {
+            const orderId = "ORD-2026-" + Math.floor(1000 + Math.random() * 9000);
+            myOrders.unshift({
+                id: orderId,
+                title: name,
+                price: price,
+                step: 1,
+                stepText: "결제 완료 / 배양 준비"
             });
-        });
+            showNotice("주문 완료", `'${name}' (${price.toLocaleString()}원) 주문이 완료되었습니다. [주문번호: ${orderId}]`);
+        }
 
-        // 4. 왼쪽 상단 3개 줄 (햄버거 메뉴) 클릭 시 메뉴 팝업 슬라이드 Open
-        openMenuBtn.addEventListener('click', () => {
-            menuDrawer.classList.add('open');
-        });
+        function openMyPage() {
+            hideAllModals();
+            const container = document.getElementById('createdPlantsContainer');
+            if (!container) return;
+            container.innerHTML = '';
 
-        closeMenuBtn.addEventListener('click', () => {
-            menuDrawer.classList.remove('open');
-        });
-
-        // 5. 모달 닫기 버튼 및 오버레이 클릭 이벤트
-        document.querySelectorAll('.close-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                closeModal();
-            });
-        });
-
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) {
-                closeModal();
+            if (mySavedPlants.length === 0) {
+                container.innerHTML = '<p style="font-size:12px; color:#888; grid-column:1/-1; text-align:center; padding:20px 0;">보관된 식물이 없습니다.</p>';
+            } else {
+                mySavedPlants.forEach((plant) => {
+                    const card = document.createElement('div');
+                    card.className = 'plant-item-card';
+                    card.innerHTML = `
+                        <div class="plant-item-thumb">${plant.svg}</div>
+                        <div class="plant-item-info">
+                            <h4>${plant.title}</h4>
+                            <p style="font-size:11px; color:#666; margin:2px 0;">${plant.look}</p>
+                            <p style="font-weight:bold; color:#2b3a2d; font-size:12px;">${plant.price.toLocaleString()}원</p>
+                            <button class="buy-now-btn" style="margin-top:6px;" onclick="buyDirect('${plant.title}', ${plant.price})">구매하기</button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
             }
-        });
 
-        // 6. AI 프롬프트 검색바 Enter 입력 이벤트 handling
-        aiPromptInput.addEventListener('keypress', (e) => {
+            document.getElementById('myPageModal').style.display = 'block';
+            showOverlay();
+        }
+
+        function openOrders() {
+            hideAllModals();
+            const container = document.getElementById('orderListContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (myOrders.length === 0) {
+                container.innerHTML = '<p style="font-size:12px; color:#888; padding:20px 0; text-align:center;">주문 내역이 없습니다.</p>';
+            } else {
+                myOrders.forEach(ord => {
+                    const card = document.createElement('div');
+                    card.className = 'order-card';
+                    card.innerHTML = `
+                        <div style="display:flex; justify-content:space-between; font-size:11px; color:#666;">
+                            <span>${ord.id}</span>
+                            <span style="font-weight:bold; color:#4a5d4e;">${ord.stepText}</span>
+                        </div>
+                        <h4 style="font-family:'Cormorant Garamond', serif; font-size:18px; color:#2b3a2d; margin:4px 0;">${ord.title}</h4>
+                        <div style="font-size:12px; font-weight:bold; color:#333;">${ord.price.toLocaleString()}원</div>
+
+                        <div class="stepper">
+                            <div class="step ${ord.step >= 1 ? 'active' : ''}">1<div class="step-label">결제완료</div></div>
+                            <div class="step ${ord.step >= 2 ? 'active' : ''}">2<div class="step-label">배양중</div></div>
+                            <div class="step ${ord.step >= 3 ? 'active' : ''}">3<div class="step-label">배송중</div></div>
+                            <div class="step ${ord.step >= 4 ? 'active' : ''}">4<div class="step-label">배송완료</div></div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+
+            document.getElementById('orderModal').style.display = 'block';
+            showOverlay();
+        }
+
+        const aiPromptInput = document.getElementById('aiPromptInput');
+
+        aiPromptInput?.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 const query = aiPromptInput.value.trim();
-                if (query) {
-                    openGeneralModal('AI Garden Inspiration', `'${query}' 프롬프트를 기반으로 AI 정원 스타일을 생성 중입니다...`);
+                if (!query) return;
+
+                hideAllModals();
+                const geneModalEl = document.getElementById('geneModal');
+                const loadingEl = document.getElementById('geneLoading');
+                const contentEl = document.getElementById('geneResultContent');
+
+                if (geneModalEl) geneModalEl.style.display = 'block';
+                if (loadingEl) loadingEl.style.display = 'block';
+                if (contentEl) contentEl.style.display = 'none';
+                showOverlay();
+
+                setTimeout(() => {
+                    const templateIndex = Math.floor(Math.random() * aiGlowSvgTemplates.length);
+                    const svgArt = aiGlowSvgTemplates[templateIndex];
+                    const basePrice = 35000;
+                    const surcharge = Math.floor(Math.random() * 4 + 2) * 10000;
+                    const finalPrice = basePrice + surcharge;
+
+                    currentGenePlant = {
+                        title: query.length > 15 ? query.substring(0, 15) + "..." : query,
+                        code: "#CR-2026-" + Math.floor(1000 + Math.random() * 9000),
+                        look: `'${query}' 프롬프트 반영 (국립수목원 표준 교배기술 적용)`,
+                        price: finalPrice,
+                        svg: svgArt
+                    };
+
+                    const titleEl = document.getElementById('plantGenTitle');
+                    const codeEl = document.getElementById('plantGenCode');
+                    const lookEl = document.getElementById('plantGenLook');
+                    const surchargeEl = document.getElementById('surchargeText');
+                    const finalPriceEl = document.getElementById('finalPriceText');
+
+                    if (titleEl) titleEl.innerText = currentGenePlant.title;
+                    if (codeEl) codeEl.innerText = `GENE CODE: ${currentGenePlant.code}`;
+                    if (lookEl) lookEl.innerText = currentGenePlant.look;
+                    if (surchargeEl) surchargeEl.innerText = `+${surcharge.toLocaleString()}원`;
+                    if (finalPriceEl) finalPriceEl.innerText = `${finalPrice.toLocaleString()}원`;
+
+                    const imgWrapper = document.querySelector('.gene-img-wrapper');
+                    if (imgWrapper) imgWrapper.innerHTML = svgArt;
+
+                    if (loadingEl) loadingEl.style.display = 'none';
+                    if (contentEl) contentEl.style.display = 'block';
                     aiPromptInput.value = '';
-                }
+                }, 1200);
             }
+        });
+
+        document.getElementById('savePlantBtn')?.addEventListener('click', () => {
+            if (currentGenePlant) {
+                mySavedPlants.unshift(currentGenePlant);
+                showNotice("보관 완료", `'${currentGenePlant.title}' 식물이 마이페이지 보관함에 저장되었습니다.`);
+            }
+        });
+
+        document.getElementById('buyPlantBtn')?.addEventListener('click', () => {
+            if (currentGenePlant) {
+                buyDirect(currentGenePlant.title, currentGenePlant.price);
+            }
+        });
+
+        document.getElementById('openMenuBtn')?.addEventListener('click', () => document.getElementById('menuDrawer')?.classList.add('open'));
+        document.getElementById('closeMenuBtn')?.addEventListener('click', () => document.getElementById('menuDrawer')?.classList.remove('open'));
+
+        document.querySelectorAll('.close-btn').forEach(btn => {
+            btn.addEventListener('click', closeModal);
+        });
+
+        document.getElementById('modalOverlay')?.addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modalOverlay')) closeModal();
+        });
+
+        document.querySelectorAll('.drawer-cat-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('menuDrawer')?.classList.remove('open');
+                const cat = link.getAttribute('data-cat');
+                openCategory(cat);
+            });
         });
     </script>
 </body>
