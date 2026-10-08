@@ -3,527 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CUT & CROP</title>
-    <!-- Google Fonts import -->
+    <title>Plant Vogue - Bio Botanical Studio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* ==================== 1. 기본 스타일 설정 ==================== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: #e5dfd5;
-            color: #333;
-            overflow-x: hidden;
-            position: relative;
-            min-height: 100vh;
-        }
-
-        /* 그림자/햇빛 감성 배경 패턴 처리 */
-        .bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 70% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 60%),
-                        linear-gradient(135deg, rgba(235, 229, 219, 0.8) 0%, rgba(215, 207, 195, 0.9) 100%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* ==================== 2. 상단 헤더 / 네비게이션 ==================== */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 25px 50px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .menu-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            padding: 5px;
-        }
-
-        .menu-btn span {
-            display: block;
-            width: 28px;
-            height: 2px;
-            background-color: #2b2b2b;
-            transition: 0.3s;
-        }
-
-        .logo {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 32px;
-            font-weight: 600;
-            letter-spacing: 4px;
-            color: #1a1a1a;
-            text-transform: uppercase;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 25px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #4a4a4a;
-            font-size: 13px;
-            letter-spacing: 1.5px;
-            font-weight: 500;
-            text-transform: uppercase;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #000;
-        }
-
-        /* ==================== 3. 메인 컨텐츠 영역 ==================== */
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 40px;
-            position: relative;
-        }
-
-        .section-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 24px;
-            font-weight: 400;
-            margin-left: 140px;
-            margin-bottom: 20px;
-            color: #3a3a3a;
-        }
-
-        /* 잡지  Peek 요소 (왼쪽 고정) */
-        .magazine-preview {
-            position: fixed;
-            left: -130px;
-            top: 45%;
-            transform: translateY(-50%);
-            width: 180px;
-            height: 250px;
-            background: #d4cbbd;
-            border-radius: 4px 12px 12px 4px;
-            box-shadow: 5px 10px 25px rgba(0,0,0,0.15);
-            cursor: pointer;
-            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), left 0.4s;
-            z-index: 20;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .magazine-preview:hover {
-            left: -100px;
-            transform: translateY(-50%) scale(1.05);
-        }
-
-        .magazine-preview-inner {
-            padding: 15px;
-            height: 100%;
-            background: linear-gradient(to right, rgba(0,0,0,0.1), transparent 20%);
-        }
-
-        .magazine-preview h4 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 22px;
-            line-height: 1.1;
-            color: #2c3e2e;
-        }
-
-        /* 3개 원형 카테고리 스타일 */
-        .categories-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 60px;
-            margin: 30px 0 60px 80px;
-        }
-
-        .category-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.4s ease;
-        }
-
-        .category-item:hover {
-            transform: translateY(-10px);
-        }
-
-        .circle-wrapper {
-            width: 210px;
-            height: 210px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-            overflow: hidden;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .category-item:hover .circle-wrapper {
-            border-color: #5b7065;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        .circle-wrapper svg {
-            width: 70%;
-            height: 70%;
-            transition: transform 0.5s ease;
-        }
-
-        .category-item:hover .circle-wrapper svg {
-            transform: scale(1.1);
-        }
-
-        .category-label {
-            margin-top: 20px;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 20px;
-            letter-spacing: 3px;
-            font-weight: 600;
             color: #2c2c2c;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex; flex-direction: column; justify-content: space-between; position: relative;
         }
-
-        /* ==================== 4. AI 프롬프트 검색바 ==================== */
-        .search-container {
-            max-width: 650px;
-            margin: 0 auto;
-            position: relative;
+        .bg-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 70% 20%, rgba(255, 255, 255, 0.55) 0%, transparent 65%),
+                        linear-gradient(135deg, rgba(235, 229, 219, 0.9) 0%, rgba(212, 204, 192, 0.95) 100%);
+            z-index: -1; pointer-events: none;
         }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; position: relative; z-index: 10; }
+        .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 6px; }
+        .menu-btn span { display: block; width: 26px; height: 2px; background-color: #222; transition: 0.3s; }
+        
+        .brand-logo-wrapper { display: flex; align-items: center; gap: 12px; cursor: pointer; text-decoration: none; user-select: none; }
+        .logo-symbol { width: 38px; height: 38px; flex-shrink: 0; filter: drop-shadow(0 2px 6px rgba(43, 58, 45, 0.15)); }
+        .logo-text-box { display: flex; flex-direction: column; justify-content: center; }
+        .logo-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; letter-spacing: 3.5px; color: #1e2920; text-transform: uppercase; line-height: 1; }
+        .logo-subtitle { font-size: 8.5px; letter-spacing: 2px; color: #5b7065; font-weight: 600; text-transform: uppercase; margin-top: 3px; }
 
-        .search-box {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: 30px;
-            padding: 12px 25px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+        .header-actions { display: flex; align-items: center; gap: 16px; }
+        .nav-links { display: flex; gap: 14px; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: #4a4a4a; font-size: 11px; letter-spacing: 1px; font-weight: 600; text-transform: uppercase; transition: color 0.3s; }
+        .nav-links a:hover { color: #000; }
+
+        main { max-width: 1250px; margin: 0 auto; width: 100%; padding: 10px 30px 100px 30px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; position: relative; }
+        .carousel-wrapper { position: relative; display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 10px; }
+        .carousel-arrow {
+            background: rgba(255, 255, 255, 0.65); border: 1px solid rgba(255, 255, 255, 0.85); width: 48px; height: 48px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; font-weight: bold; color: #2b3a2d;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06); backdrop-filter: blur(5px); transition: all 0.3s ease; z-index: 5; user-select: none;
         }
+        .carousel-arrow:hover { background: #2b3a2d; color: #fff; transform: scale(1.08); }
+        .carousel-container { width: 100%; max-width: 1020px; margin: 0 15px; overflow: hidden; border-radius: 16px; }
+        .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); width: 100%; }
 
-        .search-box:focus-within {
-            background: rgba(255, 255, 255, 0.75);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            border-color: #7a8b7b;
+        .plant-card {
+            min-width: 100%; display: flex; align-items: center; background: rgba(252, 250, 246, 0.75); border: 1px solid rgba(255, 255, 255, 0.85);
+            border-radius: 16px; padding: 35px 45px; backdrop-filter: blur(12px); box-shadow: 0 15px 35px rgba(0,0,0,0.05); gap: 40px;
         }
-
-        .search-icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 15px;
-            stroke: #777;
-            fill: none;
-            stroke-width: 2;
+        .plant-art-box {
+            width: 320px; height: 320px; border-radius: 12px; background: radial-gradient(circle at 50% 100%, #ede6db 0%, #d8cdbe 100%);
+            border: 1px solid rgba(0, 0, 0, 0.06); display: flex; align-items: center; justify-content: center; padding: 20px; flex-shrink: 0;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.03); position: relative;
         }
+        .plant-art-box svg { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.12)); }
 
-        .search-input {
-            width: 100%;
-            border: none;
-            background: transparent;
-            outline: none;
-            font-family: 'Cormorant Garamond', 'Noto Sans KR', serif;
-            font-size: 16px;
-            color: #444;
+        .plant-info-content { flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; min-height: 290px; }
+        .gene-tag { font-size: 11px; letter-spacing: 1.5px; color: #5b7065; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; display: inline-block; background: rgba(91, 112, 101, 0.12); padding: 3px 10px; border-radius: 12px; width: fit-content; }
+        .plant-title { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 600; color: #1e2920; line-height: 1.1; margin-bottom: 12px; }
+        .plant-desc { font-size: 13px; color: #555; line-height: 1.7; margin-bottom: 16px; }
+
+        .plant-spec-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; background: rgba(0, 0, 0, 0.025); padding: 12px 15px; border-radius: 8px; margin-bottom: 20px; font-size: 12px; }
+        .plant-spec-grid div span { font-weight: 600; color: #3b4d3c; }
+
+        .price-action-row { display: flex; align-items: center; justify-content: flex-end; gap: 20px; }
+        .price-label { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; color: #2b3a2d; }
+        .preorder-btn { background: #2b3a2d; color: #fff; border: none; padding: 14px 32px; font-size: 14px; font-weight: 600; border-radius: 30px; cursor: pointer; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 6px 18px rgba(43, 58, 45, 0.25); }
+        .preorder-btn:hover { background: #172419; transform: translateY(-2px); box-shadow: 0 8px 22px rgba(43, 58, 45, 0.35); }
+
+        .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(0,0,0,0.2); cursor: pointer; transition: 0.3s; }
+        .dot.active { background: #2b3a2d; width: 24px; border-radius: 10px; }
+
+        .bottom-magazine-bar {
+            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 90%; max-width: 860px; height: 65px;
+            background: #364738; color: #fff; border-radius: 16px 16px 0 0; box-shadow: 0 -8px 25px rgba(0,0,0,0.18);
+            display: flex; align-items: center; justify-content: space-between; padding: 0 30px; cursor: pointer; transition: transform 0.3s ease, background 0.3s; z-index: 30;
         }
+        .bottom-magazine-bar:hover { background: #273629; transform: translateX(-50%) translateY(-4px); }
+        .mag-peek-left { display: flex; align-items: center; gap: 14px; }
+        .mag-tag { background: #e5dfd5; color: #2b3a2d; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px; }
+        .mag-peek-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; letter-spacing: 1.5px; font-weight: 600; }
+        .mag-peek-right { font-size: 12px; letter-spacing: 1px; opacity: 0.85; display: flex; align-items: center; gap: 6px; }
 
-        .search-input::placeholder {
-            color: #888888;
-            font-style: italic;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(6px); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 100; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .close-btn { position: absolute; top: 16px; right: 20px; font-size: 26px; background: none; border: none; cursor: pointer; color: #666; z-index: 120; }
+        .close-btn:hover { color: #000; }
 
-        /* ==================== 5. 팝업 / 모달 스타일 ==================== */
-        /* 공통 팝업 배경 오버레이 */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 100;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* 공통 카테고리/페이지 모달 컨텐츠 */
-        .modal-content {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -45%) scale(0.95);
-            background: #f4f0ea;
-            width: 90%;
-            max-width: 500px;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-            z-index: 101;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-        .modal-overlay.active .modal-content {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 28px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #666;
-        }
-
-        .modal-header {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 28px;
-            margin-bottom: 15px;
-            color: #2b3a2d;
-            border-bottom: 1px solid #d0c8bc;
-            padding-bottom: 10px;
-        }
-
-        /* 메뉴 드로어 팝업 (왼쪽에서 열림) */
-        .menu-drawer {
-            position: fixed;
-            top: 0;
-            left: -350px;
-            width: 320px;
-            height: 100%;
-            background: #ede8e0;
-            box-shadow: 5px 0 25px rgba(0,0,0,0.1);
-            z-index: 102;
-            transition: left 0.4s ease;
-            padding: 60px 40px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .menu-drawer.open {
-            left: 0;
-        }
-
-        .menu-drawer ul {
-            list-style: none;
-            margin-top: 40px;
-        }
-
-        .menu-drawer li {
-            margin-bottom: 25px;
-        }
-
-        .menu-drawer a {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 24px;
-            text-decoration: none;
-            color: #333;
-            transition: color 0.2s;
-        }
-
-        .menu-drawer a:hover {
-            color: #6b8e70;
-        }
-
-        /* ==================== 6. 잡지 확대 모달 (두번째 사진 디자인) ==================== */
         .magazine-modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            width: 90%;
-            max-width: 850px;
-            height: 85vh;
-            background: #f7f4ef;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
-            z-index: 105;
-            display: flex;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease;
-            border-radius: 4px;
-            overflow: hidden;
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.92); width: 92%; max-width: 940px; height: 88vh; max-height: 640px;
+            background: #f7f4ef; box-shadow: 0 25px 60px rgba(0,0,0,0.35); z-index: 105; display: none; border-radius: 16px; overflow: hidden;
         }
+        .modal-overlay.active .magazine-modal { display: flex; transform: translate(-50%, -50%) scale(1); }
 
-        .modal-overlay.active .magazine-modal {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) scale(1);
+        .mag-modal-left { width: 50%; height: 100%; background: #111; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid #d5cecf; }
+        .mag-cover-view { flex-grow: 1; border-radius: 10px; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.3); min-height: 380px; background-color: #1a1a1a; }
+        .mag-cover-view svg { width: 100%; height: 100%; border-radius: 10px; }
+
+        .archive-selector-box { margin-top: 12px; background: rgba(255, 255, 255, 0.9); padding: 10px 14px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; }
+        .archive-selector-box label { font-size: 11px; font-weight: 700; color: #3b4d3c; }
+        .archive-btns { display: flex; gap: 6px; }
+        .archive-btn { background: #d8cfc0; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; color: #333; transition: 0.2s; }
+        .archive-btn.active, .archive-btn:hover { background: #2b3a2d; color: #fff; }
+
+        .mag-modal-right { width: 50%; height: 100%; padding: 40px 35px; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between; }
+        .gift-banner { background: rgba(200, 109, 72, 0.12); border-left: 4px solid #c86d48; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 15px 0; }
+        .gift-banner h4 { font-size: 13px; color: #9e4928; margin-bottom: 4px; font-weight: 700; }
+        .gift-banner p { font-size: 12px; color: #555; line-height: 1.5; }
+
+        .mypage-modal, .order-modal, .auth-modal {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: 90%; max-width: 620px; max-height: 85vh;
+            background: #f5f2eb; border-radius: 12px; padding: 30px; box-shadow: 0 20px 45px rgba(0,0,0,0.25); z-index: 107; display: none; overflow-y: auto;
         }
+        .modal-overlay.active .mypage-modal, .modal-overlay.active .order-modal, .modal-overlay.active .auth-modal { display: block; transform: translate(-50%, -50%) scale(1); }
+        .modal-header { font-family: 'Cormorant Garamond', serif; font-size: 26px; margin-bottom: 8px; color: #2b3a2d; border-bottom: 1px solid #d0c8bc; padding-bottom: 6px; }
+        
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; font-size: 12px; font-weight: 500; color: #4a5d4e; margin-bottom: 4px; }
+        .form-group input { width: 100%; padding: 10px 12px; border: 1px solid #d4cbbd; border-radius: 5px; background: #fcfbf8; font-size: 13px; outline: none; }
+        .auth-submit-btn { background: #2b3a2d; color: #fff; border: none; padding: 10px; width: 100%; border-radius: 5px; font-size: 13px; cursor: pointer; margin-top: 10px; }
 
-        /* 잡지 표지 왼쪽 레이아웃 (제시된 2번째 이미지 복원) */
-        .mag-cover {
-            width: 50%;
-            background: #e6dfd3;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border-right: 1px solid #d5cecf;
-            position: relative;
+        .menu-drawer {
+            position: fixed; top: 0; left: -350px; width: 320px; max-width: 85vw; height: 100%; background: #ede8e0; box-shadow: 5px 0 25px rgba(0,0,0,0.15);
+            z-index: 220; transition: left 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); padding: 50px 30px; display: flex; flex-direction: column; overflow-y: auto;
         }
+        .menu-drawer.open { left: 0; }
+        .menu-drawer ul { list-style: none; margin-top: 25px; }
+        .menu-drawer li { margin-bottom: 16px; }
+        .menu-drawer a { font-family: 'Cormorant Garamond', serif; font-size: 20px; text-decoration: none; color: #333; display: block; }
 
-        .mag-header-top {
-            display: flex;
-            justify-content: space-between;
-            font-size: 10px;
-            letter-spacing: 2px;
-            font-weight: 600;
-            color: #4a4a4a;
-        }
-
-        .mag-title-main {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 52px;
-            line-height: 0.95;
-            color: #32382e;
-            margin: 15px 0 5px 0;
-        }
-
-        .mag-subtitle {
-            font-size: 13px;
-            color: #555;
-            margin-bottom: 20px;
-        }
-
-        /* 잡지 표지 일러스트 표현 영역 */
-        .mag-art {
-            flex-grow: 1;
-            background: #485949;
-            border-radius: 4px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .mag-art-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 100%, #8ca083 0%, #364738 80%);
-        }
-
-        .glass-drink {
-            position: relative;
-            z-index: 2;
-            width: 80px;
-            height: 110px;
-            background: rgba(255,255,255,0.25);
-            border: 1px solid rgba(255,255,255,0.5);
-            border-radius: 6px;
-            backdrop-filter: blur(2px);
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .glass-liquid {
-            width: 85%;
-            height: 60%;
-            background: #c86d48;
-            border-radius: 2px 2px 4px 4px;
-            position: absolute;
-            bottom: 6px;
-        }
-
-        /* 잡지 오른쪽 안내 텍스트 영역 */
-        .mag-info {
-            width: 50%;
-            padding: 40px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .mag-info h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 26px;
-            color: #2b3a2d;
-            margin-bottom: 15px;
-        }
-
-        .plant-of-month {
-            background: rgba(116, 140, 114, 0.1);
-            border-left: 3px solid #5b7065;
-            padding: 15px;
-            margin: 15px 0 25px 0;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .plant-of-month h4 {
-            font-size: 14px;
-            color: #445446;
-            margin-bottom: 5px;
-        }
-
-        .plant-of-month p {
-            font-size: 13px;
-            color: #666;
-            line-height: 1.5;
-        }
-
-        .sub-btn {
-            background: #39483a;
-            color: #fff;
-            border: none;
-            padding: 14px 28px;
-            font-size: 13px;
-            letter-spacing: 2px;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: background 0.3s;
-        }
-
-        .sub-btn:hover {
-            background: #232e24;
+        @media (max-width: 820px) {
+            header { padding: 15px 20px; }
+            .nav-links { display: none; }
+            main { padding: 10px 15px 90px 15px; }
+            .plant-card { flex-direction: column; padding: 24px 20px; gap: 20px; }
+            .plant-art-box { width: 100%; height: 210px; }
+            .plant-title { font-size: 30px; }
+            .plant-spec-grid { grid-template-columns: 1fr; gap: 6px; }
+            .magazine-modal { flex-direction: column; height: auto; max-height: 90vh; overflow-y: auto; }
+            .mag-modal-left, .mag-modal-right { width: 100%; height: auto; }
+            .mag-modal-left { border-right: none; border-bottom: 1px solid #d5cecf; padding: 20px; }
+            .mag-modal-right { padding: 24px 20px; }
+            .bottom-magazine-bar { width: 95%; height: 55px; padding: 0 16px; }
+            .mag-peek-title { font-size: 16px; }
         }
     </style>
 </head>
@@ -531,266 +157,601 @@
 
     <div class="bg-overlay"></div>
 
-    <!-- 상단 헤더 영역 -->
     <header>
         <button class="menu-btn" id="openMenuBtn" aria-label="메뉴 열기">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </button>
-        <div class="logo">CUT & CROP</div>
-        <ul class="nav-links">
-            <li><a href="#" class="page-link" data-page="MY PAGE">MY PAGE</a></li>
-            <li><a href="#" class="page-link" data-page="LOG IN">LOG IN</a></li>
-            <li><a href="#" class="page-link" data-page="MAKE ACCOUNT">MAKE ACCOUNT</a></li>
-        </ul>
+        
+        <a href="#" class="brand-logo-wrapper" id="brandLogoHome">
+            <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="46" stroke="#2b3a2d" stroke-width="2.5" fill="rgba(255,255,255,0.3)"/>
+                <circle cx="50" cy="50" r="40" stroke="#7e9383" stroke-width="1" stroke-dasharray="3 3"/>
+                <path d="M50 80 Q 48 50 50 20" stroke="#2b3a2d" stroke-width="3" stroke-linecap="round"/>
+                <path d="M50 62 Q 28 50 24 34 Q 50 40 50 62 Z" fill="#364738" opacity="0.9"/>
+                <path d="M50 48 Q 72 38 76 22 Q 50 28 50 48 Z" fill="#8ca083" opacity="0.95"/>
+                <circle cx="50" cy="20" r="3.5" fill="#c86d48"/>
+            </svg>
+            <div class="logo-text-box">
+                <span class="logo-title">Plant Vogue</span>
+                <span class="logo-subtitle">Bio-Botanical Studio</span>
+            </div>
+        </a>
+
+        <div class="header-actions">
+            <ul class="nav-links">
+                <li><a href="#" id="loginBtn">LOG IN</a></li>
+                <li><a href="#" id="signupBtn">SIGN UP</a></li>
+                <li><a href="#" id="myPageBtn">MY PAGE</a></li>
+                <li><a href="#" id="orderStatusBtn">주문/배송</a></li>
+            </ul>
+        </div>
     </header>
 
-    <!-- 왼쪽 잡지 커버 미리보기 (마우스 오버 / 클릭 반응) -->
-    <div class="magazine-preview" id="magazineTrigger">
-        <div class="magazine-preview-inner">
-            <h4>Plant<br>& Sip</h4>
+    <main>
+        <div class="carousel-wrapper">
+            <button class="carousel-arrow" id="prevSlideBtn" aria-label="이전 식물">&laquo;</button>
+            
+            <div class="carousel-container">
+                <div class="carousel-track" id="carouselTrack"></div>
+            </div>
+
+            <button class="carousel-arrow" id="nextSlideBtn" aria-label="다음 식물">&raquo;</button>
+        </div>
+
+        <div class="carousel-dots" id="carouselDots"></div>
+    </main>
+
+    <div class="bottom-magazine-bar" id="bottomMagBar">
+        <div class="mag-peek-left">
+            <span class="mag-tag">NEW 10월호</span>
+            <span class="mag-peek-title">Plant Vogue Magazine Vol.10</span>
+        </div>
+        <div class="mag-peek-right">
+            <span>펼쳐보기</span>
+            <span style="font-size: 16px;">▲</span>
         </div>
     </div>
 
-    <!-- 메인 콘텐츠 영역 -->
-    <main>
-        <div class="section-title">Recommendation</div>
-
-        <!-- 3개 원형 카테고리 -->
-        <div class="categories-container">
-            <!-- 1. FLOWER -->
-            <div class="category-item" data-category="FLOWER">
-                <div class="circle-wrapper">
-                    <!-- 백합 벡터 그래픽 -->
-                    <svg viewBox="0 0 100 100">
-                        <path d="M50,90 Q45,60 50,30 Q55,60 50,90" fill="#6d826a" />
-                        <path d="M50,45 Q20,35 25,15 Q45,25 50,45" fill="#fcfbf7" stroke="#e0dacb" stroke-width="1"/>
-                        <path d="M50,45 Q80,35 75,15 Q55,25 50,45" fill="#fcfbf7" stroke="#e0dacb" stroke-width="1"/>
-                        <path d="M50,45 Q50,10 40,5 Q40,30 50,45" fill="#f5f0e1" stroke="#e0dacb" stroke-width="1"/>
-                        <circle cx="42" cy="18" r="1.5" fill="#a87b4e"/>
-                        <circle cx="50" cy="12" r="1.5" fill="#a87b4e"/>
-                        <circle cx="58" cy="18" r="1.5" fill="#a87b4e"/>
-                    </svg>
-                </div>
-                <div class="category-label">FLOWER</div>
-            </div>
-
-            <!-- 2. PLANTS -->
-            <div class="category-item" data-category="PLANTS">
-                <div class="circle-wrapper">
-                    <!-- 식물 잎사귀 벡터 그래픽 -->
-                    <svg viewBox="0 0 100 100">
-                        <path d="M50,85 L50,20" stroke="#4a5d4e" stroke-width="2" />
-                        <path d="M50,65 Q30,55 25,40 Q45,45 50,65" fill="#607864" />
-                        <path d="M50,55 Q70,45 75,30 Q55,35 50,55" fill="#728c76" />
-                        <path d="M50,40 Q30,30 35,15 Q50,25 50,40" fill="#4a5d4e" />
-                        <path d="M50,30 Q65,20 60,8 Q48,18 50,30" fill="#88a38c" />
-                    </svg>
-                </div>
-                <div class="category-label">PLANTS</div>
-            </div>
-
-            <!-- 3. TREE -->
-            <div class="category-item" data-category="TREE">
-                <div class="circle-wrapper">
-                    <!-- 나무 줄기/잎 벡터 그래픽 -->
-                    <svg viewBox="0 0 100 100">
-                        <path d="M45,90 Q50,60 40,25 L43,24 Q53,60 48,90" fill="#5c4d41" />
-                        <path d="M42,50 Q25,40 20,25 Q35,30 42,50" fill="#3b4d3c" />
-                        <path d="M46,40 Q68,30 70,18 Q55,20 46,40" fill="#4a5e4c" />
-                        <path d="M40,27 Q30,15 35,5 Q48,15 40,27" fill="#5c735e" />
-                    </svg>
-                </div>
-                <div class="category-label">TREE</div>
-            </div>
-        </div>
-
-        <!-- AI 프롬프트 검색바 -->
-        <div class="search-container">
-            <div class="search-box">
-                <svg class="search-icon" viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <input type="text" class="search-input" id="aiPromptInput" placeholder="Ask AI for garden Inspiration... [ AI Prompt ]">
-            </div>
-        </div>
-    </main>
-
-    <!-- ==================== 팝업 모달 모음 ==================== -->
     <div class="modal-overlay" id="modalOverlay">
         
-        <!-- 1. 카테고리 / 페이지 안내 일반 모달 -->
-        <div class="modal-content" id="generalModal">
-            <button class="close-btn" class="closeModal">&times;</button>
-            <div class="modal-header" id="modalTitle">Category</div>
-            <p id="modalDescription" style="line-height: 1.6; color: #555;">상세 내용이 들어가는 자리입니다.</p>
+        <!-- Login Modal -->
+        <div class="auth-modal" id="loginModal">
+            <button class="close-btn">&times;</button>
+            <div class="modal-header">LOG IN</div>
+            <p style="font-size: 12px; color: #777; margin-bottom: 16px;">Plant Vogue 바이오 스튜디오 회원 로그인</p>
+            <form onsubmit="handleAuth(event, '로그인')">
+                <div class="form-group"><label>이메일 주소</label><input type="email" placeholder="example@plantvogue.com" required></div>
+                <div class="form-group"><label>비밀번호</label><input type="password" placeholder="••••••••" required></div>
+                <button type="submit" class="auth-submit-btn">로그인하기</button>
+            </form>
         </div>
 
-        <!-- 2. 확대된 잡지 모달 (두번째 사진 디자인 재현) -->
+        <!-- Signup Modal -->
+        <div class="auth-modal" id="signupModal">
+            <button class="close-btn">&times;</button>
+            <div class="modal-header">SIGN UP</div>
+            <p style="font-size: 12px; color: #777; margin-bottom: 16px;">커스텀 유전자 식물 멤버십 가입</p>
+            <form onsubmit="handleAuth(event, '회원가입')">
+                <div class="form-group"><label>이름</label><input type="text" placeholder="홍길동" required></div>
+                <div class="form-group"><label>이메일 주소</label><input type="email" placeholder="example@plantvogue.com" required></div>
+                <div class="form-group"><label>비밀번호 설정</label><input type="password" placeholder="8자리 이상 입력" required></div>
+                <button type="submit" class="auth-submit-btn">가입 완료하기</button>
+            </form>
+        </div>
+
+        <!-- MyPage Modal -->
+        <div class="mypage-modal" id="myPageModal">
+            <button class="close-btn">&times;</button>
+            <div class="modal-header">MY SAVED PLANTS</div>
+            <p style="font-size: 12px; color: #777;">내가 관심 등록 및 예약한 커스텀 유전자 식물 목록입니다.</p>
+            <div id="savedPlantsContainer" style="margin-top: 15px;"></div>
+        </div>
+
+        <!-- Order Delivery Modal -->
+        <div class="order-modal" id="orderModal">
+            <button class="close-btn">&times;</button>
+            <div class="modal-header">ORDER & DELIVERY</div>
+            <p style="font-size: 12px; color: #777;">사전 예약 배양 및 맞춤 배송 현황</p>
+            <div id="orderListContainer" style="margin-top: 15px;"></div>
+        </div>
+
+        <!-- Magazine Modal -->
         <div class="magazine-modal" id="magazineModal">
-            <button class="close-btn" id="closeMagBtn">&times;</button>
+            <button class="close-btn">&times;</button>
             
-            <!-- 잡지 커버 (좌측) -->
-            <div class="mag-cover">
-                <div class="mag-header-top">
-                    <span>CIRER SIMPEAKE</span>
-                    <span>AFGEI DY KIN XUIH</span>
-                </div>
-                <div>
-                    <h1 class="mag-title-main">Plant & Sip</h1>
-                    <div class="mag-subtitle">Magazina / Plant Magazine</div>
-                </div>
-                
-                <!-- 일러스트 그래픽 영역 -->
-                <div class="mag-art">
-                    <div class="mag-art-bg"></div>
-                    <div class="glass-drink">
-                        <div class="glass-liquid"></div>
-                        <!-- 로즈마리 스틱 표현 -->
-                        <div style="width:3px; height:60px; background:#2d3a2b; transform:rotate(15deg); position:absolute; top:-10px;"></div>
+            <div class="mag-modal-left">
+                <div class="mag-cover-view" id="magCoverContainer"></div>
+
+                <div class="archive-selector-box">
+                    <label>월별 잡지 선택:</label>
+                    <div class="archive-btns">
+                        <button class="archive-btn active" onclick="loadMagIssue(10)">10월호</button>
+                        <button class="archive-btn" onclick="loadMagIssue(9)">9월호</button>
+                        <button class="archive-btn" onclick="loadMagIssue(8)">8월호</button>
                     </div>
                 </div>
             </div>
 
-            <!-- 잡지 상세 내용 및 구독 신청 (우측) -->
-            <div class="mag-info">
-                <h3>Plant & Sip Monthly</h3>
-                <p style="color: #666; font-size: 14px; line-height: 1.6;">
-                    일상 속에 녹아드는 식물과 함께하는 음료 한 잔의 여유. 매월 새로운 식물 관리법과 가드닝 팁을 전달합니다.
-                </p>
-
-                <!-- 이번달의 식물 안내 -->
-                <div class="plant-of-month">
-                    <h4>이번 달의 식물: 몬스테라 & 칵테일 로즈마리</h4>
-                    <p>
-                        9월호에서는 공기 정화 능력이 뛰어난 몬스테라 델리시오사와 홈 카페에서 쉽게 곁들일 수 있는 허브 음료 레시피를 소개합니다.
+            <div class="mag-modal-right">
+                <div>
+                    <span style="font-size:11px; font-weight:700; color:#5b7065; letter-spacing:1px;">MONTHLY PUBLICATION</span>
+                    <h3 style="font-family:'Cormorant Garamond', serif; font-size:26px; color:#2b3a2d; margin:6px 0 12px 0;" id="magArticleTitle">10월의 커스텀 식물: 바이오 발광 호야</h3>
+                    
+                    <p style="color:#555; font-size:13px; line-height:1.7;" id="magArticleBody">
+                        이번 달 Plant Vogue 팀이 제작한 특별 유전자 커스텀 식물은 밤이 되면 은은한 호박빛과 자줏빛 달빛을 내뿜는 '바이오 발광 호야'입니다. 실내 인테리어에 신비로운 고딕 감각을 더해줍니다.
                     </p>
+
+                    <div class="gift-banner">
+                        <h4>🎁 식물 사전 구매 시 잡지 증정!</h4>
+                        <p>이달의 커스텀 유전자 식물을 사전 구매하시는 모든 고객분들께 <strong style="color:#2b3a2d;">Plant Vogue 양장본 매거진</strong>을 증정해 드립니다.</p>
+                    </div>
                 </div>
 
-                <div style="margin-top: 10px;">
-                    <p style="font-size: 12px; color: #888; margin-bottom: 12px;">월간 잡지 정기 구독 서비스 (월 9,900원)</p>
-                    <button class="sub-btn" onclick="alert('구독 신청이 완료되었습니다!')">구독 서비스 신청하기</button>
-                </div>
+                <button class="preorder-btn" style="width:100%; border-radius:8px; margin-top:15px;" id="magBuyBtn">이달의 식물 사전 구매하기</button>
             </div>
         </div>
 
     </div>
 
-    <!-- 3. 좌측 햄버거 메뉴 슬라이드 드로어 -->
+    <!-- Menu Drawer -->
     <div class="menu-drawer" id="menuDrawer">
         <button class="close-btn" id="closeMenuBtn">&times;</button>
-        <div class="logo" style="font-size: 24px; margin-top:20px;">CUT & CROP</div>
+        <div class="brand-logo-wrapper" style="margin-top: 10px;">
+            <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:32px; height:32px;">
+                <circle cx="50" cy="50" r="46" stroke="#2b3a2d" stroke-width="2.5" fill="rgba(255,255,255,0.3)"/>
+                <path d="M50 80 Q 48 50 50 20" stroke="#2b3a2d" stroke-width="3" stroke-linecap="round"/>
+                <path d="M50 62 Q 28 50 24 34 Q 50 40 50 62 Z" fill="#364738"/>
+                <path d="M50 48 Q 72 38 76 22 Q 50 28 50 48 Z" fill="#8ca083"/>
+            </svg>
+            <div class="logo-text-box">
+                <span class="logo-title" style="font-size: 20px;">Plant Vogue</span>
+                <span class="logo-subtitle">Bio-Botanical Studio</span>
+            </div>
+        </div>
         <ul>
-            <li><a href="#" class="page-link" data-page="HOME">HOME</a></li>
-            <li><a href="#" class="page-link" data-page="FLOWER">FLOWER</a></li>
-            <li><a href="#" class="page-link" data-page="PLANTS">PLANTS</a></li>
-            <li><a href="#" class="page-link" data-page="TREE">TREE</a></li>
-            <li><a href="#" class="page-link" data-page="MAGAZINE">MAGAZINE</a></li>
+            <li><a href="#" id="drawerLogin">LOG IN (로그인)</a></li>
+            <li><a href="#" id="drawerSignup">SIGN UP (회원가입)</a></li>
+            <li><a href="#" id="drawerMyPage">MY PAGE (내 보관함)</a></li>
+            <li><a href="#" id="drawerOrder">ORDER STATUS (주문/배송)</a></li>
+            <li><a href="#" id="drawerMag">MONTHLY MAGAZINE (월간 잡지)</a></li>
         </ul>
     </div>
 
-    <!-- ==================== 자바스크립트 ==================== -->
     <script>
-        // 요소 선택자
-        const modalOverlay = document.getElementById('modalOverlay');
-        const generalModal = document.getElementById('generalModal');
-        const magazineModal = document.getElementById('magazineModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalDescription = document.getElementById('modalDescription');
-        
-        const magazineTrigger = document.getElementById('magazineTrigger');
-        const openMenuBtn = document.getElementById('openMenuBtn');
-        const closeMenuBtn = document.getElementById('closeMenuBtn');
-        const menuDrawer = document.getElementById('menuDrawer');
-        const aiPromptInput = document.getElementById('aiPromptInput');
-
-        // 팝업 열기 함수 (일반 모달)
-        function openGeneralModal(title, text) {
-            modalTitle.innerText = title;
-            modalDescription.innerText = text;
-            magazineModal.style.display = 'none';
-            generalModal.style.display = 'block';
-            modalOverlay.classList.add('active');
-        }
-
-        // 잡지 모달 열기 함수 (2번째 사진 구현)
-        function openMagazineModal() {
-            generalModal.style.display = 'none';
-            magazineModal.style.display = 'flex';
-            modalOverlay.classList.add('active');
-        }
-
-        // 모든 모달 닫기
-        function closeModal() {
-            modalOverlay.classList.remove('active');
-        }
-
-        // 1. 3개 원형 클릭 시 카테고리 팝업 (꽃, 식물, 나무)
-        document.querySelectorAll('.category-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const category = item.getAttribute('data-category');
-                let infoText = '';
-                
-                if(category === 'FLOWER') {
-                    infoText = '꽃 카테고리 페이지입니다. 아름다운 계절별 꽃과 꽃다발 연출 팁을 만나보세요.';
-                } else if(category === 'PLANTS') {
-                    infoText = '식물 카테고리 페이지입니다. 실내 공기 정화 식물 및 인테리어 식물 가이드를 제공합니다.';
-                } else if(category === 'TREE') {
-                    infoText = '나무 카테고리 페이지입니다. 묘목 및 반려나무 케어, 분재 관련 소식을 전달합니다.';
-                }
-                
-                openGeneralModal(`${category} CATEGORY`, infoText);
-            });
-        });
-
-        // 2. 잡지 영역 클릭/마우스 가까이 가져갈 때 잡지 팝업 열기
-        magazineTrigger.addEventListener('click', openMagazineModal);
-        // 마우스 호버 시 자연스럽게 잡지 팝업을 유도할 수 있도록 클릭 이벤트 연결
-
-        // 3. 상단 네비게이션 버튼 (LOGIN, MY PAGE, MAKE ACCOUNT) 클릭 시
-        document.querySelectorAll('.page-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const pageName = link.getAttribute('data-page');
-                menuDrawer.classList.remove('open');
-                openGeneralModal(pageName, `${pageName} 화면으로 이동합니다.`);
-            });
-        });
-
-        // 4. 왼쪽 상단 3개 줄 (햄버거 메뉴) 클릭 시 메뉴 팝업 슬라이드 Open
-        openMenuBtn.addEventListener('click', () => {
-            menuDrawer.classList.add('open');
-        });
-
-        closeMenuBtn.addEventListener('click', () => {
-            menuDrawer.classList.remove('open');
-        });
-
-        // 5. 모달 닫기 버튼 및 오버레이 클릭 이벤트
-        document.querySelectorAll('.close-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                closeModal();
-            });
-        });
-
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) {
-                closeModal();
+        const customPlantDatabase = [
+            {
+                tag: "OCTOBER EDITION",
+                title: "Bioluminescent Petunia (바이오 발광 페튜니아)",
+                desc: "10월 할로윈 테마에 맞춰 바이오 유전자 재조합으로 탄생한 발광 페튜니아입니다. 야간에 은은한 사이언-바이올렛 스타라이트 빛을 뿜어내며 실내에 환상적인 대자연의 야광 분위기를 연출합니다.",
+                price: 68000,
+                geneCode: "CRISPR-OCT-1031", scent: "시원한 바이올렛 & 자스민 노트", size: "Compact (15 - 22cm)", source: "Plant Vogue Bio-Lab Direct",
+                svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="85" fill="#0f0c1b"/>
+                        <path d="M100 160 Q 98 120 100 80" stroke="#3d2b56" stroke-width="4" fill="none"/>
+                        <ellipse cx="100" cy="168" rx="34" ry="10" fill="#a04000"/>
+                        <path d="M68 168 L74 190 L126 190 L132 168 Z" fill="#78281f"/>
+                        
+                        <!-- Petunia Flower Head -->
+                        <path d="M100 80 Q 70 50 50 70 Q 30 90 60 110 Q 80 120 100 80 Z" fill="#00f0ff" opacity="0.85"/>
+                        <path d="M100 80 Q 130 50 150 70 Q 170 90 140 110 Q 120 120 100 80 Z" fill="#00f0ff" opacity="0.85"/>
+                        <path d="M100 80 Q 70 120 80 140 Q 100 150 100 80 Z" fill="#a200ff" opacity="0.85"/>
+                        <path d="M100 80 Q 130 120 120 140 Q 100 150 100 80 Z" fill="#a200ff" opacity="0.85"/>
+                        <path d="M100 80 Q 100 40 100 30 Q 100 40 100 80 Z" fill="#e056fd" opacity="0.9"/>
+                        <circle cx="100" cy="80" r="10" fill="#ffffff"/>
+                        <circle cx="100" cy="80" r="6" fill="#00f0ff"/>
+                      </svg>`
+            },
+            {
+                tag: "SEPTEMBER EDITION",
+                title: "Moonlit Sapphire Rose (달빛 사파이어 장미)",
+                desc: "자연 상태에 존재하지 않던 정통 푸른 빛깔을 지닌 로열 블루 장미입니다. 깊고 그윽한 벨벳 감촉의 잎표면과 수확 후에도 오랫동안 향기를 지속하는 특성을 지녔습니다.",
+                price: 89000,
+                geneCode: "ROSA-BLUE-0924", scent: "딥 블루베리 & 클래식 로즈", size: "Medium (30 - 42cm)", source: "Plant Vogue Bio-Lab Direct",
+                svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="85" fill="#0b1b2b"/>
+                        <path d="M100 160 L100 85" stroke="#273c75" stroke-width="4" fill="none"/>
+                        <ellipse cx="100" cy="165" rx="30" ry="10" fill="#192a56"/>
+                        <circle cx="100" cy="70" r="32" fill="#1e3799"/>
+                        <circle cx="92" cy="65" r="16" fill="#2980b9"/>
+                        <circle cx="108" cy="65" r="16" fill="#2980b9"/>
+                        <circle cx="100" cy="78" r="18" fill="#3c40c6"/>
+                        <circle cx="100" cy="58" r="12" fill="#54a0ff"/>
+                      </svg>`
+            },
+            {
+                tag: "AUGUST EDITION",
+                title: "Ember Gold Sunflower (엠버 골드 해바라기)",
+                desc: "실내 보관이 용이하도록 미니어처 크기로 재배양된 햇살 광채 해바라기입니다. 사계절 개화 특성을 지녀 한여름의 눈부신 활력을 실내 공간에 항상 선사합니다.",
+                price: 64000,
+                geneCode: "HELI-SUN-0801", scent: "스위트 허니 & 썬샤인", size: "Small (20 - 32cm)", source: "Plant Vogue Bio-Lab Direct",
+                svg: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="85" fill="#5d3f11"/>
+                        <path d="M100 160 L100 90" stroke="#2e7d32" stroke-width="4"/>
+                        <ellipse cx="100" cy="165" rx="28" ry="8" fill="#a0522d"/>
+                        <circle cx="100" cy="75" r="22" fill="#5d4037"/>
+                        <circle cx="100" cy="75" r="38" fill="none" stroke="#f1c40f" stroke-width="12" stroke-dasharray="10,3"/>
+                      </svg>`
             }
+        ];
+
+        const magazineIssues = {
+            10: {
+                articleTitle: "10월의 커스텀 식물: 바이오 발광 페튜니아 (Halloween Edition)",
+                articleBody: "10월호 Plant Vogue에서는 할로윈 고딕 패션 인테리어와 수놓인 야광 식물 컬렉션을 다룹니다. 야간에 자발광하는 페튜니아의 영롱한 아우라와 할로윈 인테리어 연출법을 확인하세요.",
+                svgCover: `<svg viewBox="0 0 320 440" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+                    <defs>
+                        <radialGradient id="pumpkinGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#fff9d6" />
+                            <stop offset="40%" stop-color="#ff9f1a" />
+                            <stop offset="100%" stop-color="#cc4400" />
+                        </radialGradient>
+                        <radialGradient id="plantGlowOct" cx="50%" cy="50%" r="60%">
+                            <stop offset="0%" stop-color="#ff79c6" stop-opacity="0.9"/>
+                            <stop offset="70%" stop-color="#bd93f9" stop-opacity="0.5"/>
+                            <stop offset="100%" stop-color="#140a16" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+
+                    <!-- Dark Gothic Background with Ambient Lighting -->
+                    <rect width="320" height="440" fill="#0d0714"/>
+                    <rect x="0" y="150" width="320" height="290" fill="#180e24"/>
+                    <circle cx="160" cy="270" r="130" fill="url(#plantGlowOct)"/>
+                    
+                    <!-- Outer Decorative Frame -->
+                    <rect x="10" y="10" width="300" height="420" fill="none" stroke="#d4af37" stroke-width="1.2"/>
+                    <rect x="13" y="13" width="294" height="414" fill="none" stroke="#d4af37" stroke-width="0.5" stroke-dasharray="4,2"/>
+
+                    <!-- Top Subtext Bar -->
+                    <text x="20" y="28" fill="#d4af37" font-size="7.5" font-weight="600">OCT 2019 | ISSUE NO.2 | VOL.1 | 기획 $5,000원</text>
+                    <text x="298" y="28" fill="#d4af37" font-size="8" font-weight="bold" text-anchor="end">제10일호</text>
+
+                    <!-- Main Brand Header -->
+                    <text x="160" y="60" fill="#f3e5ab" font-family="'Cormorant Garamond', serif" font-size="34" font-weight="bold" text-anchor="middle" letter-spacing="3.5">PLANT VOGUE</text>
+                    <!-- Decorative Floral flourishes on header -->
+                    <path d="M72,42 Q76,38 80,44 Q74,48 72,42 Z" fill="#d4af37"/>
+                    <path d="M242,42 Q246,38 250,44 Q244,48 242,42 Z" fill="#d4af37"/>
+                    
+                    <text x="160" y="73" fill="#d4b2d8" font-size="7" letter-spacing="1.2" text-anchor="middle">THE PREMIER GUIDE TO BOTANICAL LUXURY &amp; LIFESTYLE</text>
+
+                    <!-- Halloween Pumpkin Head Character in Gothic Suit -->
+                    <g transform="translate(0, 10)">
+                        <!-- Suit Body -->
+                        <path d="M95,330 L160,230 L225,330 L245,420 L75,420 Z" fill="#13091c"/>
+                        <!-- Shirt & Tie Collar -->
+                        <polygon points="152,235 160,255 168,235" fill="#f5f5f5"/>
+                        <polygon points="158,245 160,270 162,245" fill="#2b0036"/>
+
+                        <!-- Jack-O-Lantern Pumpkin Head -->
+                        <ellipse cx="160" cy="182" rx="44" ry="36" fill="#d35400"/>
+                        <path d="M160,146 Q162,138 160,132 Q158,138 160,146 Z" stroke="#271302" stroke-width="4" fill="none"/>
+                        <ellipse cx="160" cy="182" rx="42" ry="34" fill="#e67e22"/>
+                        <!-- Pumpkin Rib Lines -->
+                        <path d="M160,148 C140,158 138,206 160,216 C182,206 180,158 160,148 Z" fill="none" stroke="#ba4a00" stroke-width="1.2"/>
+                        <path d="M160,148 C124,160 122,204 160,216 C198,204 196,160 160,148 Z" fill="none" stroke="#a04000" stroke-width="1"/>
+
+                        <!-- Glowing Eyes, Nose & Smile -->
+                        <polygon points="144,172 152,180 138,180" fill="url(#pumpkinGlow)"/>
+                        <polygon points="176,172 184,180 168,180" fill="url(#pumpkinGlow)"/>
+                        <polygon points="160,181 164,188 156,188" fill="url(#pumpkinGlow)"/>
+                        <path d="M136,195 Q160,215 184,195 Q174,204 160,204 Q146,204 136,195 Z" fill="url(#pumpkinGlow)"/>
+
+                        <!-- Terracotta Pot & Bioluminescent Plant -->
+                        <ellipse cx="160" cy="280" rx="38" ry="10" fill="#d35400"/>
+                        <path d="M126,280 L130,325 L190,325 L194,280 Z" fill="#b94a00"/>
+                        <!-- Luminescent Pink/Violet Leaves -->
+                        <path d="M110,270 Q75,225 55,245 Q35,275 65,290 Z" fill="#ff79c6" opacity="0.95"/>
+                        <path d="M210,270 Q245,225 265,245 Q285,275 255,290 Z" fill="#ff79c6" opacity="0.95"/>
+                        <path d="M130,265 Q110,210 135,215 Q150,240 130,265 Z" fill="#bd93f9"/>
+                        <path d="M190,265 Q210,210 185,215 Q170,240 190,265 Z" fill="#bd93f9"/>
+                        <!-- Vine tendrils -->
+                        <path d="M128,290 Q110,320 120,345 Q130,360 115,370" fill="none" stroke="#ff79c6" stroke-width="2"/>
+                        <path d="M192,290 Q210,320 200,345 Q190,360 205,370" fill="none" stroke="#ff79c6" stroke-width="2"/>
+                    </g>
+
+                    <!-- Editorial Cover Typography Overlay -->
+                    <text x="22" y="110" fill="#e67e22" font-size="10" font-weight="bold">이달의 식물</text>
+                    <text x="22" y="126" fill="#ffffff" font-family="'Cormorant Garamond', serif" font-size="17" font-weight="bold">BIOLUMINESCENT</text>
+                    <text x="22" y="142" fill="#ffffff" font-family="'Cormorant Garamond', serif" font-size="17" font-weight="bold">HOYA!</text>
+                    <text x="22" y="156" fill="#cccccc" font-size="8">초보자를 위한 가이드:</text>
+                    <text x="22" y="167" fill="#cccccc" font-size="8">완벽한 할로윈 Hoya 키우기</text>
+
+                    <text x="298" y="110" fill="#e67e22" font-size="10" font-weight="bold" text-anchor="end">패션 &amp; 식물</text>
+                    <text x="298" y="128" fill="#ffffff" font-family="'Cormorant Garamond', serif" font-size="18" font-weight="bold" text-anchor="end">HALLOWEEN CHIC</text>
+                    <text x="298" y="144" fill="#cccccc" font-size="8" text-anchor="end">식물과 함께하는 세련된 고딕 스타일링</text>
+
+                    <text x="298" y="235" fill="#d4af37" font-size="9.5" font-weight="bold" text-anchor="end">INSIDE:</text>
+                    <text x="298" y="248" fill="#ffffff" font-size="8" text-anchor="end">아뜰리에: 김도운 작가의</text>
+                    <text x="298" y="259" fill="#ffffff" font-size="8" text-anchor="end">할로윈 조영 인테리어</text>
+
+                    <text x="298" y="315" fill="#d4af37" font-size="9.5" font-weight="bold" text-anchor="end">TREND</text>
+                    <text x="298" y="327" fill="#ffffff" font-size="8" text-anchor="end">미래형 발광 식물 컬렉션</text>
+
+                    <!-- Bottom Barcode -->
+                    <g transform="translate(242, 385)">
+                        <rect x="0" y="0" width="56" height="28" fill="#ffffff"/>
+                        <line x1="5" y1="3" x2="5" y2="22" stroke="#000" stroke-width="1.5"/>
+                        <line x1="10" y1="3" x2="10" y2="22" stroke="#000" stroke-width="2.5"/>
+                        <line x1="16" y1="3" x2="16" y2="22" stroke="#000" stroke-width="1"/>
+                        <line x1="22" y1="3" x2="22" y2="22" stroke="#000" stroke-width="3"/>
+                        <line x1="30" y1="3" x2="30" y2="22" stroke="#000" stroke-width="1.5"/>
+                        <line x1="38" y1="3" x2="38" y2="22" stroke="#000" stroke-width="2"/>
+                        <line x1="46" y1="3" x2="46" y2="22" stroke="#000" stroke-width="1"/>
+                        <text x="28" y="26" fill="#000" font-size="5" text-anchor="middle">9 771254 541990</text>
+                    </g>
+
+                    <text x="160" y="422" fill="#d4af37" font-size="7.5" font-weight="bold" text-anchor="middle">WWW.PLANTVOGUE.CO.KR</text>
+                </svg>`
+            },
+            9: {
+                articleTitle: "9월의 커스텀 식물: 신비의 달빛 사파이어 장미 (Blue Rose)",
+                articleBody: "9월호 커스텀 바이오 식물은 깊은 로열 블루 벨벳 드레스의 품격을 담은 'The Blue Rose Era'입니다. 자연계에 없던 신비로운 푸른 빛을 머금은 정품 화훼 컬렉션입니다.",
+                svgCover: `<svg viewBox="0 0 320 440" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+                    <defs>
+                        <radialGradient id="blueRoseGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#4a90e2"/>
+                            <stop offset="60%" stop-color="#1e3799"/>
+                            <stop offset="100%" stop-color="#0c2461"/>
+                        </radialGradient>
+                    </defs>
+
+                    <!-- Background Blue Garden -->
+                    <rect width="320" height="440" fill="#09182a"/>
+                    <rect x="0" y="0" width="18" height="440" fill="#f1c40f"/>
+                    <text x="9" y="220" fill="#2c3e50" font-size="8" font-weight="bold" transform="rotate(-90, 9, 220)" text-anchor="middle" letter-spacing="1.5">PLANT VOGUE • SEPTEMBER 2024</text>
+
+                    <!-- Header -->
+                    <text x="165" y="55" fill="#d4af37" font-family="'Cormorant Garamond', serif" font-size="34" font-weight="bold" text-anchor="middle" letter-spacing="3.5">PLANT VOGUE</text>
+                    <text x="165" y="68" fill="#d4af37" font-size="6.5" letter-spacing="0.8" text-anchor="middle">SEPTEMBER 2024 • ISSUE NO. 2 • plantvogue.com • PRICE KRW 9,000</text>
+                    <text x="165" y="80" fill="#ffffff" font-size="8" font-weight="600" text-anchor="middle">SEPTEMBER 2024</text>
+
+                    <!-- Model with Blue Velvet Dress & Blue Rose Bouquet -->
+                    <g transform="translate(10, 10)">
+                        <!-- Model Face & Hair -->
+                        <path d="M135,100 Q155,85 175,100 L180,150 Q155,165 130,150 Z" fill="#1b110a"/>
+                        <ellipse cx="155" cy="120" rx="16" ry="20" fill="#f7d4bc"/>
+                        <path d="M143,115 Q149,112 153,115" stroke="#3d2314" stroke-width="1.2" fill="none"/>
+                        <path d="M157,115 Q161,112 167,115" stroke="#3d2314" stroke-width="1.2" fill="none"/>
+                        <!-- Smile -->
+                        <path d="M148,130 Q155,136 162,130" stroke="#b33939" stroke-width="1.5" fill="none"/>
+
+                        <!-- Royal Blue Velvet Dress -->
+                        <path d="M105,200 L130,160 Q155,150 180,160 L205,200 L225,330 L85,330 Z" fill="#0c2461"/>
+                        <path d="M125,160 Q155,185 185,160" stroke="#1e3799" stroke-width="4" fill="none"/>
+
+                        <!-- Large Blue Rose Bouquet -->
+                        <ellipse cx="155" cy="225" rx="46" ry="34" fill="#09182a"/>
+                        <circle cx="140" cy="215" r="15" fill="url(#blueRoseGlow)"/>
+                        <circle cx="170" cy="215" r="15" fill="url(#blueRoseGlow)"/>
+                        <circle cx="155" cy="232" r="17" fill="#2980b9"/>
+                        <circle cx="128" cy="230" r="13" fill="#3498db"/>
+                        <circle cx="182" cy="230" r="13" fill="#3498db"/>
+                        <circle cx="155" cy="210" r="11" fill="#487eb0"/>
+                        <!-- Baby's breath accent dots -->
+                        <circle cx="132" cy="205" r="2" fill="#fff"/><circle cx="178" cy="205" r="2" fill="#fff"/><circle cx="155" cy="198" r="2" fill="#fff"/>
+                    </g>
+
+                    <!-- Typography overlays -->
+                    <text x="32" y="110" fill="#d4af37" font-size="9" font-weight="bold">ISSUE NO. 2</text>
+                    <text x="32" y="126" fill="#ffffff" font-family="'Cormorant Garamond', serif" font-size="19" font-weight="bold">BEYOND BORDERS:</text>
+                    <text x="32" y="146" fill="#ffffff" font-family="'Cormorant Garamond', serif" font-size="19" font-weight="bold">THE BLUE ROSE ERA</text>
+                    <text x="32" y="160" fill="#d4af37" font-size="8" font-style="italic">(Rosa 'Blue Moon')</text>
+
+                    <text x="298" y="110" fill="#d4af37" font-size="9.5" font-weight="bold" text-anchor="end">FLORAL FASHION:</text>
+                    <text x="298" y="124" fill="#ffffff" font-size="8" text-anchor="end">Botanicals We Love &amp; Wear</text>
+                    <text x="298" y="135" fill="#ffffff" font-size="8" text-anchor="end">Stylish outfits in nature</text>
+
+                    <text x="165" y="380" fill="#ffffff" font-family="'Cormorant Garamond', serif" font-size="20" font-weight="bold" text-anchor="middle">SEPTEMBER BLOOMS</text>
+                    <text x="165" y="408" fill="#ffffff" font-family="'Cormorant Garamond', serif" font-size="26" font-style="italic" text-anchor="middle">NATURAL BEAUTY</text>
+                </svg>`
+            },
+            8: {
+                articleTitle: "8월의 커스텀 식물: 황금빛 엠파이어 해바라기",
+                articleBody: "8월호 커스텀 식물은 한여름 햇살을 담은 해바라기 컬렉션입니다. 실내 공간에서도 눈부신 활력과 밝은 에너지를 선사하도록 작고 조화롭게 배양되었습니다.",
+                svgCover: `<svg viewBox="0 0 320 440" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+                    <!-- Sky & Sunflower Field Background -->
+                    <rect width="320" height="210" fill="#4a90e2"/>
+                    <rect x="0" y="210" width="320" height="230" fill="#e1b12c"/>
+                    <rect x="0" y="0" width="18" height="440" fill="#f1c40f"/>
+                    <text x="9" y="220" fill="#2c3e50" font-size="8" font-weight="bold" transform="rotate(-90, 9, 220)" text-anchor="middle" letter-spacing="1.5">PLANT VOGUE • AUGUST 2024</text>
+
+                    <!-- Background Sunflowers -->
+                    <g transform="translate(10, 195)">
+                        <circle cx="40" cy="20" r="18" fill="#f1c40f"/><circle cx="40" cy="20" r="7" fill="#5d4037"/>
+                        <circle cx="100" cy="30" r="22" fill="#f1c40f"/><circle cx="100" cy="30" r="9" fill="#5d4037"/>
+                        <circle cx="220" cy="25" r="20" fill="#f1c40f"/><circle cx="220" cy="25" r="8" fill="#5d4037"/>
+                        <circle cx="280" cy="20" r="18" fill="#f1c40f"/><circle cx="280" cy="20" r="7" fill="#5d4037"/>
+                    </g>
+
+                    <!-- Header -->
+                    <text x="165" y="55" fill="#d4af37" font-family="'Cormorant Garamond', serif" font-size="34" font-weight="bold" text-anchor="middle" letter-spacing="3.5">PLANT VOGUE</text>
+                    <text x="165" y="68" fill="#2c3e50" font-size="6.5" letter-spacing="0.8" text-anchor="middle">AUGUST 2024 • ISSUE NO. 1 • plantvogue.com • PRICE KRW 9,000</text>
+                    <text x="165" y="80" fill="#2c3e50" font-size="8" font-weight="600" text-anchor="middle">AUGUST 2024</text>
+
+                    <!-- Straw Scarecrow in Linen Dress Holding Sunflowers -->
+                    <g transform="translate(10, 10)">
+                        <!-- Straw Hat -->
+                        <ellipse cx="155" cy="115" rx="42" ry="11" fill="#e5aa70"/>
+                        <path d="M125,115 Q155,88 185,115 Z" fill="#c68a4c"/>
+
+                        <!-- Scarecrow Button Face -->
+                        <circle cx="155" cy="130" r="17" fill="#f3a683"/>
+                        <circle cx="147" cy="127" r="2" fill="#2c3e50"/>
+                        <circle cx="163" cy="127" r="2" fill="#2c3e50"/>
+                        <path d="M146,137 Q155,145 164,137" stroke="#2c3e50" stroke-width="1.5" fill="none"/>
+
+                        <!-- Linen Dress Body -->
+                        <path d="M115,155 L155,145 L195,155 L225,330 L85,330 Z" fill="#d1ccc0"/>
+
+                        <!-- Sunflower Bouquet in Arms -->
+                        <circle cx="155" cy="225" r="42" fill="#f1c40f"/>
+                        <circle cx="155" cy="225" r="18" fill="#5d4037"/>
+                        <circle cx="125" cy="205" r="16" fill="#f39c12"/><circle cx="125" cy="205" r="7" fill="#3e2723"/>
+                        <circle cx="185" cy="205" r="16" fill="#f39c12"/><circle cx="185" cy="205" r="7" fill="#3e2723"/>
+                    </g>
+
+                    <!-- Typography overlays -->
+                    <text x="32" y="110" fill="#d4af37" font-size="9" font-weight="bold">ISSUE NO. 1</text>
+                    <text x="32" y="126" fill="#ffffff" font-family="'Cormorant Garamond', serif" font-size="19" font-weight="bold">BRIGHT &amp; BOLD:</text>
+                    <text x="32" y="146" fill="#ffffff" font-family="'Cormorant Garamond', serif" font-size="19" font-weight="bold">THE SUNFLOWER ERA</text>
+                    <text x="32" y="160" fill="#ffffff" font-size="8" font-style="italic">Helianthus annuus</text>
+
+                    <text x="298" y="110" fill="#d4af37" font-size="9.5" font-weight="bold" text-anchor="end">FLORAL FASHION:</text>
+                    <text x="298" y="124" fill="#ffffff" font-size="8" text-anchor="end">Botanicals We Love &amp; Wear</text>
+
+                    <text x="165" y="380" fill="#ffffff" font-family="'Cormorant Garamond', serif" font-size="20" font-weight="bold" text-anchor="middle">SUMMER BLOOMS</text>
+                    <text x="165" y="408" fill="#ffffff" font-family="'Cormorant Garamond', serif" font-size="26" font-style="italic" text-anchor="middle">NATURAL BEAUTY</text>
+                </svg>`
+            }
+        };
+
+        let currentSlideIndex = 0;
+        let myOrders = [{ id: "ORD-2026-9901", title: "Lumina Petunia (사전 예약)", price: 58000, step: 2, stepText: "CRISPR 유전자 맞춤 배양 중" }];
+
+        function renderCarousel() {
+            const track = document.getElementById('carouselTrack');
+            const dotsContainer = document.getElementById('carouselDots');
+            if (!track || !dotsContainer) return;
+
+            track.innerHTML = '';
+            dotsContainer.innerHTML = '';
+
+            customPlantDatabase.forEach((plant, idx) => {
+                const card = document.createElement('div');
+                card.className = 'plant-card';
+                card.innerHTML = `
+                    <div class="plant-art-box">${plant.svg}</div>
+                    <div class="plant-info-content">
+                        <div>
+                            <span class="gene-tag">${plant.tag}</span>
+                            <div class="plant-title">${plant.title}</div>
+                            <p class="plant-desc">${plant.desc}</p>
+                            
+                            <div class="plant-spec-grid">
+                                <div><span>유전자 코드:</span> ${plant.geneCode}</div>
+                                <div><span>향기 노트:</span> ${plant.scent}</div>
+                                <div><span>식물 크기:</span> ${plant.size}</div>
+                                <div><span>학술 자원:</span> ${plant.source}</div>
+                            </div>
+                        </div>
+
+                        <div class="price-action-row">
+                            <div class="price-label">${plant.price.toLocaleString()}원</div>
+                            <button class="preorder-btn" onclick="orderPlant('${plant.title}', ${plant.price})">사전 구매하기</button>
+                        </div>
+                    </div>
+                `;
+                track.appendChild(card);
+
+                const dot = document.createElement('div');
+                dot.className = `dot ${idx === currentSlideIndex ? 'active' : ''}`;
+                dot.addEventListener('click', () => goToSlide(idx));
+                dotsContainer.appendChild(dot);
+            });
+
+            updateSlidePosition();
+        }
+
+        function updateSlidePosition() {
+            const track = document.getElementById('carouselTrack');
+            if (track) track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+            document.querySelectorAll('.dot').forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentSlideIndex);
+            });
+        }
+
+        function goToSlide(index) { currentSlideIndex = index; updateSlidePosition(); }
+        document.getElementById('prevSlideBtn')?.addEventListener('click', () => { currentSlideIndex = (currentSlideIndex === 0) ? customPlantDatabase.length - 1 : currentSlideIndex - 1; updateSlidePosition(); });
+        document.getElementById('nextSlideBtn')?.addEventListener('click', () => { currentSlideIndex = (currentSlideIndex === customPlantDatabase.length - 1) ? 0 : currentSlideIndex + 1; updateSlidePosition(); });
+
+        function hideAllModals() {
+            ['loginModal', 'signupModal', 'myPageModal', 'orderModal', 'magazineModal'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = 'none';
+            });
+        }
+
+        function showOverlay() { document.getElementById('modalOverlay')?.classList.add('active'); }
+        function closeModal() { document.getElementById('modalOverlay')?.classList.remove('active'); hideAllModals(); }
+
+        function handleAuth(e, type) {
+            e.preventDefault();
+            alert(`${type} 처리가 성공적으로 완료되었습니다.`);
+            closeModal();
+        }
+
+        function orderPlant(name, price) {
+            myOrders.unshift({
+                id: "ORD-2026-" + Math.floor(1000 + Math.random() * 9000),
+                title: name + " (잡지 증정 포함)",
+                price: price, step: 1, stepText: "결제 완료 / 배양 준비"
+            });
+            alert(`'${name}' 사전 구매 신청이 완료되었습니다!\n(🎁 증정 매거진 함께 배송)`);
+            openOrders();
+        }
+
+        function openOrders() {
+            hideAllModals();
+            const container = document.getElementById('orderListContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            myOrders.forEach(ord => {
+                const card = document.createElement('div');
+                card.style.cssText = "background:#fff; border-radius:8px; padding:16px; margin-top:10px; border:1px solid #e0d8cc;";
+                card.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; font-size:11px; color:#666;">
+                        <span>${ord.id}</span><span style="font-weight:bold; color:#4a5d4e;">${ord.stepText}</span>
+                    </div>
+                    <h4 style="font-family:'Cormorant Garamond', serif; font-size:18px; color:#2b3a2d; margin:4px 0;">${ord.title}</h4>
+                    <div style="font-size:12px; font-weight:bold; color:#333;">${ord.price.toLocaleString()}원</div>
+                `;
+                container.appendChild(card);
+            });
+
+            document.getElementById('orderModal').style.display = 'block';
+            showOverlay();
+        }
+
+        function loadMagIssue(month) {
+            const data = magazineIssues[month];
+            if (!data) return;
+
+            document.querySelectorAll('.archive-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.includes(`${month}월`));
+            });
+
+            const coverContainer = document.getElementById('magCoverContainer');
+            if (coverContainer) coverContainer.innerHTML = data.svgCover;
+
+            document.getElementById('magArticleTitle').innerText = data.articleTitle;
+            document.getElementById('magArticleBody').innerText = data.articleBody;
+        }
+
+        /* Event Listeners Initialization */
+        document.getElementById('loginBtn')?.addEventListener('click', (e) => { e.preventDefault(); hideAllModals(); document.getElementById('loginModal').style.display = 'block'; showOverlay(); });
+        document.getElementById('signupBtn')?.addEventListener('click', (e) => { e.preventDefault(); hideAllModals(); document.getElementById('signupModal').style.display = 'block'; showOverlay(); });
+        document.getElementById('orderStatusBtn')?.addEventListener('click', (e) => { e.preventDefault(); openOrders(); });
+        document.getElementById('myPageBtn')?.addEventListener('click', (e) => { e.preventDefault(); hideAllModals(); document.getElementById('myPageModal').style.display = 'block'; showOverlay(); });
+
+        document.getElementById('drawerLogin')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('menuDrawer')?.classList.remove('open'); hideAllModals(); document.getElementById('loginModal').style.display = 'block'; showOverlay(); });
+        document.getElementById('drawerSignup')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('menuDrawer')?.classList.remove('open'); hideAllModals(); document.getElementById('signupModal').style.display = 'block'; showOverlay(); });
+        document.getElementById('drawerOrder')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('menuDrawer')?.classList.remove('open'); openOrders(); });
+        document.getElementById('drawerMyPage')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('menuDrawer')?.classList.remove('open'); hideAllModals(); document.getElementById('myPageModal').style.display = 'block'; showOverlay(); });
+        document.getElementById('drawerMag')?.addEventListener('click', (e) => {
+            e.preventDefault(); document.getElementById('menuDrawer')?.classList.remove('open'); hideAllModals(); loadMagIssue(10);
+            document.getElementById('magazineModal').style.display = 'flex'; showOverlay();
         });
 
-        // 6. AI 프롬프트 검색바 Enter 입력 이벤트 handling
-        aiPromptInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                const query = aiPromptInput.value.trim();
-                if (query) {
-                    openGeneralModal('AI Garden Inspiration', `'${query}' 프롬프트를 기반으로 AI 정원 스타일을 생성 중입니다...`);
-                    aiPromptInput.value = '';
-                }
-            }
-        });
+        document.getElementById('bottomMagBar')?.addEventListener('click', () => { hideAllModals(); loadMagIssue(10); document.getElementById('magazineModal').style.display = 'flex'; showOverlay(); });
+        document.getElementById('magBuyBtn')?.addEventListener('click', () => { orderPlant(customPlantDatabase[0].title, customPlantDatabase[0].price); });
+
+        document.getElementById('openMenuBtn')?.addEventListener('click', () => document.getElementById('menuDrawer')?.classList.add('open'));
+        document.getElementById('closeMenuBtn')?.addEventListener('click', () => document.getElementById('menuDrawer')?.classList.remove('open'));
+
+        document.querySelectorAll('.close-btn').forEach(btn => btn.addEventListener('click', closeModal));
+        document.getElementById('modalOverlay')?.addEventListener('click', (e) => { if (e.target === document.getElementById('modalOverlay')) closeModal(); });
+
+        window.onload = function() { renderCarousel(); };
     </script>
 </body>
 </html>
